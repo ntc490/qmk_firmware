@@ -1,0 +1,300 @@
+#ifndef __IOH_H__
+#define __IOH_H__
+
+#include <avr/io.h>
+#include <inttypes.h>
+
+#ifdef __cplusplus
+  #ifndef TRUE
+  #define TRUE true
+  #endif
+  #ifndef FALSE
+  #define FALSE false
+  #endif
+extern "C" {
+#else
+  #ifndef TRUE
+  #define TRUE 1
+  #endif
+  #ifndef FALSE
+  #define FALSE 0
+  #endif
+#endif /* __cplusplus */
+
+
+
+
+/*                      ===== IO Summary =====
+ *
+ * Name                      Desc       DIR ASSERTS DEFAULT    OPTIONS
+ * special_keys          PALIAS:D     INPUT
+ * columns               PALIAS:F     INPUT
+ * row_sel3                   PB3    OUTPUT    HIGH     OFF    []
+ * row_sel2                   PB4    OUTPUT    HIGH     OFF    []
+ * row_sel1                   PB5    OUTPUT    HIGH     OFF    []
+ * row_sel0                   PB6    OUTPUT    HIGH     OFF    []
+ * scroll_lock_led            PB7    OUTPUT     LOW     OFF    []
+ * keypad_led                 PD0    OUTPUT     LOW     OFF    []
+ * caps_lock_led              PD1    OUTPUT     LOW     OFF    []
+ * num_lock_led               PD4    OUTPUT     LOW     OFF    []
+ * keypad_button              PD5     INPUT     LOW     N/A    ['PULLUP']
+ * system_led                 PD6    OUTPUT    HIGH     OFF    []
+ * program_button             PD7     INPUT     LOW     N/A    ['PULLUP']
+ * speaker                    PE7    OUTPUT    HIGH     OFF    []
+ * column0                    PF0     INPUT     LOW     N/A    ['PULLUP']
+ * column1                    PF1     INPUT     LOW     N/A    ['PULLUP']
+ * column2                    PF2     INPUT     LOW     N/A    ['PULLUP']
+ * column3                    PF3     INPUT     LOW     N/A    ['PULLUP']
+ * column4                    PF4     INPUT     LOW     N/A    ['PULLUP']
+ * column5                    PF5     INPUT     LOW     N/A    ['PULLUP']
+ * column6                    PF6     INPUT     LOW     N/A    ['PULLUP']
+ * column7                    PF7     INPUT     LOW     N/A    ['PULLUP']
+ */
+
+
+#define ROW_SEL3_BIT_NUM                                                                          3
+#define ROW_SEL3_BIT_VAL                                                      _BV(ROW_SEL3_BIT_NUM)
+#define ROW_SEL3_PORT                                                                         PORTB
+#define ROW_SEL3_DDR                                                                           DDRB
+#define ROW_SEL3_PINS                                                                          PINB
+
+#define ROW_SEL2_BIT_NUM                                                                          4
+#define ROW_SEL2_BIT_VAL                                                      _BV(ROW_SEL2_BIT_NUM)
+#define ROW_SEL2_PORT                                                                         PORTB
+#define ROW_SEL2_DDR                                                                           DDRB
+#define ROW_SEL2_PINS                                                                          PINB
+
+#define ROW_SEL1_BIT_NUM                                                                          5
+#define ROW_SEL1_BIT_VAL                                                      _BV(ROW_SEL1_BIT_NUM)
+#define ROW_SEL1_PORT                                                                         PORTB
+#define ROW_SEL1_DDR                                                                           DDRB
+#define ROW_SEL1_PINS                                                                          PINB
+
+#define ROW_SEL0_BIT_NUM                                                                          6
+#define ROW_SEL0_BIT_VAL                                                      _BV(ROW_SEL0_BIT_NUM)
+#define ROW_SEL0_PORT                                                                         PORTB
+#define ROW_SEL0_DDR                                                                           DDRB
+#define ROW_SEL0_PINS                                                                          PINB
+
+#define SCROLL_LOCK_LED_BIT_NUM                                                                   7
+#define SCROLL_LOCK_LED_BIT_VAL                                        _BV(SCROLL_LOCK_LED_BIT_NUM)
+#define SCROLL_LOCK_LED_PORT                                                                  PORTB
+#define SCROLL_LOCK_LED_DDR                                                                    DDRB
+#define SCROLL_LOCK_LED_PINS                                                                   PINB
+
+#define KEYPAD_LED_BIT_NUM                                                                        0
+#define KEYPAD_LED_BIT_VAL                                                  _BV(KEYPAD_LED_BIT_NUM)
+#define KEYPAD_LED_PORT                                                                       PORTD
+#define KEYPAD_LED_DDR                                                                         DDRD
+#define KEYPAD_LED_PINS                                                                        PIND
+
+#define CAPS_LOCK_LED_BIT_NUM                                                                     1
+#define CAPS_LOCK_LED_BIT_VAL                                            _BV(CAPS_LOCK_LED_BIT_NUM)
+#define CAPS_LOCK_LED_PORT                                                                    PORTD
+#define CAPS_LOCK_LED_DDR                                                                      DDRD
+#define CAPS_LOCK_LED_PINS                                                                     PIND
+
+#define NUM_LOCK_LED_BIT_NUM                                                                      4
+#define NUM_LOCK_LED_BIT_VAL                                              _BV(NUM_LOCK_LED_BIT_NUM)
+#define NUM_LOCK_LED_PORT                                                                     PORTD
+#define NUM_LOCK_LED_DDR                                                                       DDRD
+#define NUM_LOCK_LED_PINS                                                                      PIND
+
+#define KEYPAD_BUTTON_BIT_NUM                                                                     5
+#define KEYPAD_BUTTON_BIT_VAL                                            _BV(KEYPAD_BUTTON_BIT_NUM)
+#define KEYPAD_BUTTON_PORT                                                                    PORTD
+#define KEYPAD_BUTTON_DDR                                                                      DDRD
+#define KEYPAD_BUTTON_PINS                                                                     PIND
+
+#define SYSTEM_LED_BIT_NUM                                                                        6
+#define SYSTEM_LED_BIT_VAL                                                  _BV(SYSTEM_LED_BIT_NUM)
+#define SYSTEM_LED_PORT                                                                       PORTD
+#define SYSTEM_LED_DDR                                                                         DDRD
+#define SYSTEM_LED_PINS                                                                        PIND
+
+#define PROGRAM_BUTTON_BIT_NUM                                                                    7
+#define PROGRAM_BUTTON_BIT_VAL                                          _BV(PROGRAM_BUTTON_BIT_NUM)
+#define PROGRAM_BUTTON_PORT                                                                   PORTD
+#define PROGRAM_BUTTON_DDR                                                                     DDRD
+#define PROGRAM_BUTTON_PINS                                                                    PIND
+
+#define SPEAKER_BIT_NUM                                                                           7
+#define SPEAKER_BIT_VAL                                                        _BV(SPEAKER_BIT_NUM)
+#define SPEAKER_PORT                                                                          PORTE
+#define SPEAKER_DDR                                                                            DDRE
+#define SPEAKER_PINS                                                                           PINE
+
+#define COLUMN0_BIT_NUM                                                                           0
+#define COLUMN0_BIT_VAL                                                        _BV(COLUMN0_BIT_NUM)
+#define COLUMN0_PORT                                                                          PORTF
+#define COLUMN0_DDR                                                                            DDRF
+#define COLUMN0_PINS                                                                           PINF
+
+#define COLUMN1_BIT_NUM                                                                           1
+#define COLUMN1_BIT_VAL                                                        _BV(COLUMN1_BIT_NUM)
+#define COLUMN1_PORT                                                                          PORTF
+#define COLUMN1_DDR                                                                            DDRF
+#define COLUMN1_PINS                                                                           PINF
+
+#define COLUMN2_BIT_NUM                                                                           2
+#define COLUMN2_BIT_VAL                                                        _BV(COLUMN2_BIT_NUM)
+#define COLUMN2_PORT                                                                          PORTF
+#define COLUMN2_DDR                                                                            DDRF
+#define COLUMN2_PINS                                                                           PINF
+
+#define COLUMN3_BIT_NUM                                                                           3
+#define COLUMN3_BIT_VAL                                                        _BV(COLUMN3_BIT_NUM)
+#define COLUMN3_PORT                                                                          PORTF
+#define COLUMN3_DDR                                                                            DDRF
+#define COLUMN3_PINS                                                                           PINF
+
+#define COLUMN4_BIT_NUM                                                                           4
+#define COLUMN4_BIT_VAL                                                        _BV(COLUMN4_BIT_NUM)
+#define COLUMN4_PORT                                                                          PORTF
+#define COLUMN4_DDR                                                                            DDRF
+#define COLUMN4_PINS                                                                           PINF
+
+#define COLUMN5_BIT_NUM                                                                           5
+#define COLUMN5_BIT_VAL                                                        _BV(COLUMN5_BIT_NUM)
+#define COLUMN5_PORT                                                                          PORTF
+#define COLUMN5_DDR                                                                            DDRF
+#define COLUMN5_PINS                                                                           PINF
+
+#define COLUMN6_BIT_NUM                                                                           6
+#define COLUMN6_BIT_VAL                                                        _BV(COLUMN6_BIT_NUM)
+#define COLUMN6_PORT                                                                          PORTF
+#define COLUMN6_DDR                                                                            DDRF
+#define COLUMN6_PINS                                                                           PINF
+
+#define COLUMN7_BIT_NUM                                                                           7
+#define COLUMN7_BIT_VAL                                                        _BV(COLUMN7_BIT_NUM)
+#define COLUMN7_PORT                                                                          PORTF
+#define COLUMN7_DDR                                                                            DDRF
+#define COLUMN7_PINS                                                                           PINF
+
+static inline uint8_t special_keys_read(void) { return PIND; }
+
+static inline uint8_t columns_read(void) { return PINF; }
+
+static inline void row_sel3_on(void)  { PORTB |=  ROW_SEL3_BIT_VAL; }
+static inline void row_sel3_off(void) { PORTB &= ~ROW_SEL3_BIT_VAL; }
+static inline uint8_t row_sel3_reg_is_on(void)  { return (bit_is_set(PORTB, ROW_SEL3_BIT_NUM) ? TRUE  : FALSE); }
+static inline uint8_t row_sel3_reg_is_off(void) { return (bit_is_set(PORTB, ROW_SEL3_BIT_NUM) ? FALSE : TRUE ); }
+static inline uint8_t row_sel3_is_on(void)      { return (bit_is_set(PINB, ROW_SEL3_BIT_NUM) ? TRUE  : FALSE); }
+static inline uint8_t row_sel3_is_off(void)     { return (bit_is_set(PINB, ROW_SEL3_BIT_NUM) ? FALSE : TRUE ); }
+
+static inline void row_sel2_on(void)  { PORTB |=  ROW_SEL2_BIT_VAL; }
+static inline void row_sel2_off(void) { PORTB &= ~ROW_SEL2_BIT_VAL; }
+static inline uint8_t row_sel2_reg_is_on(void)  { return (bit_is_set(PORTB, ROW_SEL2_BIT_NUM) ? TRUE  : FALSE); }
+static inline uint8_t row_sel2_reg_is_off(void) { return (bit_is_set(PORTB, ROW_SEL2_BIT_NUM) ? FALSE : TRUE ); }
+static inline uint8_t row_sel2_is_on(void)      { return (bit_is_set(PINB, ROW_SEL2_BIT_NUM) ? TRUE  : FALSE); }
+static inline uint8_t row_sel2_is_off(void)     { return (bit_is_set(PINB, ROW_SEL2_BIT_NUM) ? FALSE : TRUE ); }
+
+static inline void row_sel1_on(void)  { PORTB |=  ROW_SEL1_BIT_VAL; }
+static inline void row_sel1_off(void) { PORTB &= ~ROW_SEL1_BIT_VAL; }
+static inline uint8_t row_sel1_reg_is_on(void)  { return (bit_is_set(PORTB, ROW_SEL1_BIT_NUM) ? TRUE  : FALSE); }
+static inline uint8_t row_sel1_reg_is_off(void) { return (bit_is_set(PORTB, ROW_SEL1_BIT_NUM) ? FALSE : TRUE ); }
+static inline uint8_t row_sel1_is_on(void)      { return (bit_is_set(PINB, ROW_SEL1_BIT_NUM) ? TRUE  : FALSE); }
+static inline uint8_t row_sel1_is_off(void)     { return (bit_is_set(PINB, ROW_SEL1_BIT_NUM) ? FALSE : TRUE ); }
+
+static inline void row_sel0_on(void)  { PORTB |=  ROW_SEL0_BIT_VAL; }
+static inline void row_sel0_off(void) { PORTB &= ~ROW_SEL0_BIT_VAL; }
+static inline uint8_t row_sel0_reg_is_on(void)  { return (bit_is_set(PORTB, ROW_SEL0_BIT_NUM) ? TRUE  : FALSE); }
+static inline uint8_t row_sel0_reg_is_off(void) { return (bit_is_set(PORTB, ROW_SEL0_BIT_NUM) ? FALSE : TRUE ); }
+static inline uint8_t row_sel0_is_on(void)      { return (bit_is_set(PINB, ROW_SEL0_BIT_NUM) ? TRUE  : FALSE); }
+static inline uint8_t row_sel0_is_off(void)     { return (bit_is_set(PINB, ROW_SEL0_BIT_NUM) ? FALSE : TRUE ); }
+
+static inline void scroll_lock_led_on(void)  { PORTB &= ~SCROLL_LOCK_LED_BIT_VAL; }
+static inline void scroll_lock_led_off(void) { PORTB |=  SCROLL_LOCK_LED_BIT_VAL; }
+static inline uint8_t scroll_lock_led_reg_is_on(void)  { return (bit_is_clear(PORTB, SCROLL_LOCK_LED_BIT_NUM) ? TRUE  : FALSE); }
+static inline uint8_t scroll_lock_led_reg_is_off(void) { return (bit_is_clear(PORTB, SCROLL_LOCK_LED_BIT_NUM) ? FALSE : TRUE ); }
+static inline uint8_t scroll_lock_led_is_on(void)      { return (bit_is_clear(PINB, SCROLL_LOCK_LED_BIT_NUM) ? TRUE  : FALSE); }
+static inline uint8_t scroll_lock_led_is_off(void)     { return (bit_is_clear(PINB, SCROLL_LOCK_LED_BIT_NUM) ? FALSE : TRUE ); }
+
+static inline void keypad_led_on(void)  { PORTD &= ~KEYPAD_LED_BIT_VAL; }
+static inline void keypad_led_off(void) { PORTD |=  KEYPAD_LED_BIT_VAL; }
+static inline uint8_t keypad_led_reg_is_on(void)  { return (bit_is_clear(PORTD, KEYPAD_LED_BIT_NUM) ? TRUE  : FALSE); }
+static inline uint8_t keypad_led_reg_is_off(void) { return (bit_is_clear(PORTD, KEYPAD_LED_BIT_NUM) ? FALSE : TRUE ); }
+static inline uint8_t keypad_led_is_on(void)      { return (bit_is_clear(PIND, KEYPAD_LED_BIT_NUM) ? TRUE  : FALSE); }
+static inline uint8_t keypad_led_is_off(void)     { return (bit_is_clear(PIND, KEYPAD_LED_BIT_NUM) ? FALSE : TRUE ); }
+
+static inline void caps_lock_led_on(void)  { PORTD &= ~CAPS_LOCK_LED_BIT_VAL; }
+static inline void caps_lock_led_off(void) { PORTD |=  CAPS_LOCK_LED_BIT_VAL; }
+static inline uint8_t caps_lock_led_reg_is_on(void)  { return (bit_is_clear(PORTD, CAPS_LOCK_LED_BIT_NUM) ? TRUE  : FALSE); }
+static inline uint8_t caps_lock_led_reg_is_off(void) { return (bit_is_clear(PORTD, CAPS_LOCK_LED_BIT_NUM) ? FALSE : TRUE ); }
+static inline uint8_t caps_lock_led_is_on(void)      { return (bit_is_clear(PIND, CAPS_LOCK_LED_BIT_NUM) ? TRUE  : FALSE); }
+static inline uint8_t caps_lock_led_is_off(void)     { return (bit_is_clear(PIND, CAPS_LOCK_LED_BIT_NUM) ? FALSE : TRUE ); }
+
+static inline void num_lock_led_on(void)  { PORTD &= ~NUM_LOCK_LED_BIT_VAL; }
+static inline void num_lock_led_off(void) { PORTD |=  NUM_LOCK_LED_BIT_VAL; }
+static inline uint8_t num_lock_led_reg_is_on(void)  { return (bit_is_clear(PORTD, NUM_LOCK_LED_BIT_NUM) ? TRUE  : FALSE); }
+static inline uint8_t num_lock_led_reg_is_off(void) { return (bit_is_clear(PORTD, NUM_LOCK_LED_BIT_NUM) ? FALSE : TRUE ); }
+static inline uint8_t num_lock_led_is_on(void)      { return (bit_is_clear(PIND, NUM_LOCK_LED_BIT_NUM) ? TRUE  : FALSE); }
+static inline uint8_t num_lock_led_is_off(void)     { return (bit_is_clear(PIND, NUM_LOCK_LED_BIT_NUM) ? FALSE : TRUE ); }
+
+static inline uint8_t keypad_button_is_on(void)      { return (bit_is_clear(PIND, KEYPAD_BUTTON_BIT_NUM) ? TRUE  : FALSE); }
+static inline uint8_t keypad_button_is_off(void)     { return (bit_is_clear(PIND, KEYPAD_BUTTON_BIT_NUM) ? FALSE : TRUE ); }
+
+static inline void system_led_on(void)  { PORTD |=  SYSTEM_LED_BIT_VAL; }
+static inline void system_led_off(void) { PORTD &= ~SYSTEM_LED_BIT_VAL; }
+static inline uint8_t system_led_reg_is_on(void)  { return (bit_is_set(PORTD, SYSTEM_LED_BIT_NUM) ? TRUE  : FALSE); }
+static inline uint8_t system_led_reg_is_off(void) { return (bit_is_set(PORTD, SYSTEM_LED_BIT_NUM) ? FALSE : TRUE ); }
+static inline uint8_t system_led_is_on(void)      { return (bit_is_set(PIND, SYSTEM_LED_BIT_NUM) ? TRUE  : FALSE); }
+static inline uint8_t system_led_is_off(void)     { return (bit_is_set(PIND, SYSTEM_LED_BIT_NUM) ? FALSE : TRUE ); }
+
+static inline uint8_t program_button_is_on(void)      { return (bit_is_clear(PIND, PROGRAM_BUTTON_BIT_NUM) ? TRUE  : FALSE); }
+static inline uint8_t program_button_is_off(void)     { return (bit_is_clear(PIND, PROGRAM_BUTTON_BIT_NUM) ? FALSE : TRUE ); }
+
+static inline void speaker_on(void)  { PORTE |=  SPEAKER_BIT_VAL; }
+static inline void speaker_off(void) { PORTE &= ~SPEAKER_BIT_VAL; }
+static inline uint8_t speaker_reg_is_on(void)  { return (bit_is_set(PORTE, SPEAKER_BIT_NUM) ? TRUE  : FALSE); }
+static inline uint8_t speaker_reg_is_off(void) { return (bit_is_set(PORTE, SPEAKER_BIT_NUM) ? FALSE : TRUE ); }
+static inline uint8_t speaker_is_on(void)      { return (bit_is_set(PINE, SPEAKER_BIT_NUM) ? TRUE  : FALSE); }
+static inline uint8_t speaker_is_off(void)     { return (bit_is_set(PINE, SPEAKER_BIT_NUM) ? FALSE : TRUE ); }
+
+static inline uint8_t column0_is_on(void)      { return (bit_is_clear(PINF, COLUMN0_BIT_NUM) ? TRUE  : FALSE); }
+static inline uint8_t column0_is_off(void)     { return (bit_is_clear(PINF, COLUMN0_BIT_NUM) ? FALSE : TRUE ); }
+
+static inline uint8_t column1_is_on(void)      { return (bit_is_clear(PINF, COLUMN1_BIT_NUM) ? TRUE  : FALSE); }
+static inline uint8_t column1_is_off(void)     { return (bit_is_clear(PINF, COLUMN1_BIT_NUM) ? FALSE : TRUE ); }
+
+static inline uint8_t column2_is_on(void)      { return (bit_is_clear(PINF, COLUMN2_BIT_NUM) ? TRUE  : FALSE); }
+static inline uint8_t column2_is_off(void)     { return (bit_is_clear(PINF, COLUMN2_BIT_NUM) ? FALSE : TRUE ); }
+
+static inline uint8_t column3_is_on(void)      { return (bit_is_clear(PINF, COLUMN3_BIT_NUM) ? TRUE  : FALSE); }
+static inline uint8_t column3_is_off(void)     { return (bit_is_clear(PINF, COLUMN3_BIT_NUM) ? FALSE : TRUE ); }
+
+static inline uint8_t column4_is_on(void)      { return (bit_is_clear(PINF, COLUMN4_BIT_NUM) ? TRUE  : FALSE); }
+static inline uint8_t column4_is_off(void)     { return (bit_is_clear(PINF, COLUMN4_BIT_NUM) ? FALSE : TRUE ); }
+
+static inline uint8_t column5_is_on(void)      { return (bit_is_clear(PINF, COLUMN5_BIT_NUM) ? TRUE  : FALSE); }
+static inline uint8_t column5_is_off(void)     { return (bit_is_clear(PINF, COLUMN5_BIT_NUM) ? FALSE : TRUE ); }
+
+static inline uint8_t column6_is_on(void)      { return (bit_is_clear(PINF, COLUMN6_BIT_NUM) ? TRUE  : FALSE); }
+static inline uint8_t column6_is_off(void)     { return (bit_is_clear(PINF, COLUMN6_BIT_NUM) ? FALSE : TRUE ); }
+
+static inline uint8_t column7_is_on(void)      { return (bit_is_clear(PINF, COLUMN7_BIT_NUM) ? TRUE  : FALSE); }
+static inline uint8_t column7_is_off(void)     { return (bit_is_clear(PINF, COLUMN7_BIT_NUM) ? FALSE : TRUE ); }
+
+static inline void ports_init(void)
+{
+    PORTB = 0x80;
+    PORTD = 0xB3;
+    PORTE = 0x00;
+    PORTF = 0xFF;
+    DDRB = 0xF8;
+    DDRD = 0x53;
+    DDRE = 0x80;
+    DDRF = 0x00;
+}
+
+
+
+#ifdef __cplusplus
+};
+#endif /* __cplusplus */
+
+
+
+#endif /* __IOH_H__ */
+
