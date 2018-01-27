@@ -4,10 +4,12 @@
 #define NUMBERS 1
 #define FKEYS 2
 #define POWERUSER 3
+#define MOUSE 4
 
 #define _POWERUSR MO(POWERUSER)
 #define _NUMBERS MO(NUMBERS)
 #define _FKEYS TG(FKEYS)
+#define _MOUSE MO(MOUSE)
 
 /* Allow single tap and then shifted-char sequence */
 #define _LSHIFT LSFT_T(KC_NO)
@@ -48,9 +50,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _POWERUSR, KC_A,      KC_S,      KC_D,      KC_F,      KC_G,
     _LSHIFT,   KC_Z,      KC_X,      KC_C,      KC_V,      KC_B,      XXXXXXX,
                XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,
-                                                       _NUMBERS, XXXXXXX,
+                                                       _NUMBERS, _MOUSE,
                                                        KC_LGUI,
-                                                       KC_BSPACE, CTL_T(KC_NO), KC_LALT,
+                                                       KC_BSPACE, KC_LCTRL, KC_LALT,
 
     XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,
     XXXXXXX,   KC_Y,      KC_U,      KC_I,      KC_O,      KC_P,      KC_BSLASH,
@@ -114,6 +116,25 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                KC_LEFT,   KC_DOWN,   KC_UP,    KC_RIGHT,   _______,   _______,
     _______,   LGUI(KC_GRAVE),_______,_______,  LALT(KC_KP_ASTERISK), _______, _______,
                _______,   _______,   _______,   _______,   _______,
+                  _______,   _______,
+                  _______,
+                  _______,   _______,   _______),
+
+[MOUSE] = ERGODOX_KEYMAP(
+    _______,   _______,   _______,   _______,   _______,   _______,   _______,
+    _______,   _______,   _______,   _______,   _______,   _______,   _______,
+    _______,   _______,   _______,   _______,   _______,   _______,
+    _______,   _______,   _______,   _______,   _______,   _______,   _______,
+               _______,   _______,   _______,   _______,   _______,
+                                                       _______,   _______,
+                                                       _______,
+                                                       _______,   _______,   _______,
+
+    _______,   KC_MS_WH_UP, KC_MS_WH_DOWN, _______,   _______,   _______,   _______,
+    _______,   _______,     _______,       _______,   _______,   _______,   _______,
+               KC_MS_L,     KC_MS_D,       KC_MS_U,   KC_MS_R,   _______,   _______,
+    _______,   KC_MS_BTN1,  KC_MS_BTN2,    _______,   _______,   _______,   _______,
+               _______,     _______,       _______,   _______,   _______,
                   _______,   _______,
                   _______,
                   _______,   _______,   _______),
