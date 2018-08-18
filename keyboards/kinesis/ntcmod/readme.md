@@ -7,4 +7,6 @@ My wiring is probably different than anyone else's.  I did the project before fi
 ## Keymaps
 Note that I don't use many of the keys, but I think I made provisions to use them if you wish.
 
+* [My Keymap called ntc](/keyboards/kinesis/keymaps/ntc)
+
 

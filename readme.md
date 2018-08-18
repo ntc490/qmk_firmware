@@ -16,7 +16,7 @@ This is a keyboard firmware based on the [tmk\_keyboard firmware](http://github.
 ## Supported Keyboards
 * [Nathan's hacked Kineses keyboard](/keyboards/kinesis/ntcmod)
 * [Nathan's custom Ergodox EZ](/keyboards/ergodox_ez)
-* Nathan's custom keymap for both new keyboards
+* [Nathan's custom keymap for both new keyboards](/keyboards/kinesis/keymaps/ntc)
 * [Planck](/keyboards/planck/)
 * [Preonic](/keyboards/preonic/)
 * [ErgoDox EZ](/keyboards/ergodox_ez/)
