@@ -14,7 +14,9 @@ This is a keyboard firmware based on the [tmk\_keyboard firmware](http://github.
 [http://qmk.fm](http://qmk.fm) is the official website of QMK, where you can find links to this page, the documentation, and the keyboards supported by QMK.
 
 ## Supported Keyboards
-
+* [Nathan's hacked Kineses keyboard](/keyboards/kinesis/ntcmod)
+* [Nathan's custom Ergodox EZ](/keyboards/ergodox_ez)
+* Nathan's custom keymap for both new keyboards
 * [Planck](/keyboards/planck/)
 * [Preonic](/keyboards/preonic/)
 * [ErgoDox EZ](/keyboards/ergodox_ez/)
@@ -26,6 +28,16 @@ The project also includes community support for [lots of other keyboards](/keybo
 ## Maintainers
 
 QMK is developed and maintained by Jack Humbert of OLKB with contributions from the community, and of course, [Hasu](https://github.com/tmk). The OLKB product firmwares are maintained by [Jack Humbert](https://github.com/jackhumbert), the Ergodox EZ by [Erez Zukerman](https://github.com/ezuk), and the Clueboard by [Zach White](https://github.com/skullydazed).
+
+## How to build my stuff...
+
+Use the following commands to build each:
+
+> make kinesis/ntcmod:ntc
+
+OR
+
+> make ergodox_ez:ntc
 
 ## Documentation
 
