@@ -3,10 +3,10 @@
 #define BASE 0 // Base qwerty
 #define NUMBERS 1
 #define FKEYS 2
-#define POWERUSER 3
+#define POWERUSR 3
 #define MOUSE 4
 
-#define _POWERUSR MO(POWERUSER)
+#define _POWERUSR MO(POWERUSR)
 #define _NUMBERS MO(NUMBERS)
 #define _FKEYS TG(FKEYS)
 #define _MOUSE MO(MOUSE)
@@ -101,7 +101,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                   _______,
                   _______,   _______,   _______),
 
-[POWERUSER] = ERGODOX_KEYMAP(
+[POWERUSR] = ERGODOX_KEYMAP(
     _______,   _______,   _______,   _______,   _______,   _______,   _______,
     _______,   _______,   _______,   ALL_T(KC_E),_______,  ALL_T(KC_T), _______,
     _______,   _______,   ALL_T(KC_S),LGUI(KC_LBRACKET),LGUI(KC_RBRACKET),ALL_T(KC_G),
