@@ -1,4 +1,5 @@
 #include "kinesis.h"
+#include "ergodox_compat.h"
 
 #define BASE 0 // Base qwerty
 #define NUMBERS 1

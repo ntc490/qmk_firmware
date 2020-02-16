@@ -1,9 +1,9 @@
-#ifndef KINESIS_NTCMOD_H
-#define KINESIS_NTCMOD_H
+#ifndef KINESIS_COMPAT_H
+#define KINESIS_COMPAT_H
 
 #include "../kinesis.h"
 
-#define LAYOUT(                           \
+#define ERGODOX_KEYMAP(                   \
         k80,k70,k60,k50,k40,k30,na1,      \
         k81,k71,k61,k51,k41,k31,na2,      \
         k82,k72,k62,k52,k42,k32,          \
@@ -40,7 +40,7 @@
 }
 
 /* 86 Keys */
-#define LAYOUT_pretty(                    \
+#define KEYMAP(                           \
     k02,k22,k12,k01,k21,k11,k00,k20,k10,  \
     k80,k70,k60,k50,k40,k30,              \
     k81,k71,k61,k51,k41,k31,              \
@@ -78,4 +78,4 @@
         { KC_NO,  KC_NO  ,KC_NO  ,KC_NO,  kF4,    kF5,    kF6,     kF7} \
 }
 
-#endif
+#endif // ERGODOX_COMPAT
