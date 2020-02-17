@@ -11,4 +11,8 @@
 #define MATRIX_ROWS 16
 #define MATRIX_COLS  8
 
+#define MATRIX_ROW_PINS {}
+#define MATRIX_COL_PINS {}
+#define DIODE_DIRECTION COL2ROW
+
 #endif
