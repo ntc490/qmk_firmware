@@ -49,12 +49,12 @@ bool process_record_secrets(uint16_t keycode, keyrecord_t *record) {
 
 
 __attribute__ ((weak))
-uint32_t layer_state_set_keymap (uint32_t state) {
+layer_state_t layer_state_set_keymap (layer_state_t state) {
   return state;
 }
 
 __attribute__ ((weak))
-uint32_t default_layer_state_set_keymap (uint32_t state) {
+layer_state_t default_layer_state_set_keymap (layer_state_t state) {
   return state;
 }
 
@@ -64,6 +64,7 @@ void led_set_keymap(uint8_t usb_led) {}
 void set_os(uint8_t os) {
   runtime_userspace_config.os_target = os;
 
+#if defined(UNICODE_ENABLE) || defined(UNICODEMAP_ENABLE) || defined(UCIS_ENABLE)
   switch (os) {
   case _OS_MACOS:
     set_unicode_input_mode(UC_OSX);
@@ -75,6 +76,7 @@ void set_os(uint8_t os) {
     set_unicode_input_mode(UC_WIN);
     break;
   }
+#endif
 }
 
 void matrix_init_user(void) {

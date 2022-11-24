@@ -17,14 +17,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-/* USB Device descriptor parameter */
-#define VENDOR_ID       0xCB10
-#define PRODUCT_ID      0x1256
-#define DEVICE_VER      0x0400
-#define MANUFACTURER    Keebio
-#define PRODUCT         Iris Keyboard
-#define DESCRIPTION     Split 50 percent ergonomic keyboard
-
 /* key matrix size */
 // Rows are doubled-up
 #define MATRIX_ROWS 10
@@ -73,3 +65,4 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define RGB_DI_PIN D6
 #define RGBLED_NUM 12    // Number of LEDs
 #define RGBLED_SPLIT { 6, 6 }
+#define RGBLIGHT_ANIMATIONS

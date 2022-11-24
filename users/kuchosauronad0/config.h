@@ -11,7 +11,7 @@
 #    undef  NOTE_REST
 #    define NOTE_REST 1.00f
 #  endif // !__arm__
-#  define UNICODE_SONG_OSX SONG(RICK_ROLL)
+#  define UNICODE_SONG_MAC SONG(RICK_ROLL)
 #  define UNICODE_SONG_LNX SONG(RICK_ROLL)
 #  define UNICODE_SONG_WIN SONG(RICK_ROLL)
 #  define UNICODE_SONG_BSD SONG(RICK_ROLL)
@@ -40,10 +40,6 @@
 #ifndef ONESHOT_TIMEOUT
 #  define ONESHOT_TIMEOUT 3000
 #endif// !ONESHOT_TIMEOUT
-
-#ifndef QMK_KEYS_PER_SCAN
-#  define QMK_KEYS_PER_SCAN 4
-#endif // !QMK_KEYS_PER_SCAN
 
 #if defined(LEADER_ENABLE)
 #  define LEADER_PER_KEY_TIMING

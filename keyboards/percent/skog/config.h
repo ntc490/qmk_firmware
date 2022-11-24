@@ -17,13 +17,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#define VENDOR_ID       0x20A0
-#define PRODUCT_ID      0x422D
-#define DEVICE_VER      0x0200
-
-#define MANUFACTURER    Percent
-#define PRODUCT         Skog TKL
-
 /* matrix size */
 #define MATRIX_ROWS 7
 #define MATRIX_COLS 14
@@ -32,10 +25,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define MATRIX_COL_PINS { A0, A1, A2, A3, A4, A5, A6, A7, C7, C6, C5, C4, C3, C2 }
 #define DIODE_DIRECTION COL2ROW
 
+#define LED_CAPS_LOCK_PIN D1
+#define LED_SCROLL_LOCK_PIN D6
+
 #define RGBLED_NUM 2
 #define RGBLIGHT_ANIMATIONS
 
 #define BACKLIGHT_PIN D4
 #define BACKLIGHT_LEVELS 5
-
-#define NO_UART 1

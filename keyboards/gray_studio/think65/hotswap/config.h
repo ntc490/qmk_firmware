@@ -19,14 +19,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "config_common.h"
 
-/* USB Device descriptor parameter */
-#define VENDOR_ID       0xFEED
-#define PRODUCT_ID      0x0000
-#define DEVICE_VER      0x0001
-#define MANUFACTURER    Gray Studio
-#define PRODUCT         THINK6.5
-#define DESCRIPTION     65% 6.5 degree custom keyboard
-
 /* key matrix size */
 #define MATRIX_ROWS 5
 #define MATRIX_COLS 16
@@ -45,6 +37,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define MATRIX_COL_PINS { D1, D0, D2, D3, D5, D4, D6, D7, B4, B5, F0, F1, B6, F4, F5, F6 }
 
 #define DIODE_DIRECTION COL2ROW
+
+#define LED_NUM_LOCK_PIN C6
+#define LED_CAPS_LOCK_PIN C7
+#define LED_SCROLL_LOCK_PIN F7
+#define LED_PIN_ON_STATE 0
 
 #define RGB_DI_PIN E2
 #ifdef RGB_DI_PIN

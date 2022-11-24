@@ -43,13 +43,8 @@ enum {
   [TD_ZERO_ENT]  = ACTION_TAP_DANCE_DOUBLE(KC_0, KC_ENT)
 };
 */
-  // Enable these functions using FUNC(n) macro.
-  const uint16_t PROGMEM fn_actions[] = {
-      [0] = ACTION_LAYER_TAP_KEY(_LOWER, KC_SPC),    //Hold for momentary Lower layer, Tap for Space,
-      [1] = ACTION_LAYER_TAP_KEY(_RAISE, KC_ENT),    //Hold for momentary Mouse layer, Tap for Enter,
-   };
-#define SPC_LW FUNC(0)
-#define ENT_RS FUNC(1)
+#define SPC_LW LT(_LOWER, KC_SPC)
+#define ENT_RS LT(_RAISE, KC_ENT)
 #define FNC MO(_FUNCTION)
 #define MSE MO(_MOUSE)
 #define PIPE M(R_PIPE)
@@ -211,7 +206,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* Adjust (Lower + Raise)
  * ,-----------------------------------------.     ,----------------------------------------.
- * |      |      |      |      |      |RESET |     |     |      |      |      |      |      |
+ * |      |      |      |      |      |QK_BOOT |     |     |      |      |      |      |      |
  * |------+------+------+------+------+------|     |-----+------+------+------+------+------|
  * |      |      |      |      |      |      |     |     |TermOn|TermOf|      |      |  Del |
  * |------+------+------+------+------+------|     |-----+------+------+------+------+------|
@@ -224,7 +219,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 
 [_ADJUST] = LAYOUT(
-  _______, _______, _______, _______, _______, RESET,        _______, _______, _______, _______, _______, _______, \
+  _______, _______, _______, _______, _______, QK_BOOT,      _______, _______, _______, _______, _______, _______, \
   _______, _______, _______, _______, _______, _______,      _______, TERM_ON, TERM_OFF,_______, _______, KC_DEL, \
   _______, _______, _______, _______, _______, _______,      _______, QWERTY,  COLEMAK, DVORAK, _______,  _______, \
   _______, _______, _______, _______, _______, _______,      _______, _______, _______, _______, _______, _______, \

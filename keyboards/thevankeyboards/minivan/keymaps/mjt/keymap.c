@@ -20,9 +20,9 @@ enum planck_keycodes {
   DYNAMIC_MACRO_RANGE,
 };
 
-#define FKEYS F(_FKEYS)
+#define FKEYS LT(_FKEYS, KC_TAB)
 #define NUMSYM TT(_NUMSYM)
-#define FKEYGRV F(_FKEYGRV)
+#define FKEYGRV LT(_FKEYS, KC_GRV)
 #define MACSLEEP M(5)
 #define PLOVER M(6)
 #define LAYERRESET M(7)
@@ -48,7 +48,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   {_______, KC_F1,  KC_F2,  KC_F3,  KC_F4,  KC_F5, KC_F6, KC_F7,  KC_F8,  KC_F9,  KC_F10, _______},
   {KC_DEL, KC_F11, KC_F12,  KC_F13,  KC_F14,  KC_F15, _______, _______,  _______,  MACSLEEP, DYN_REC_START1, DYN_REC_START2 },
   {KC_CAPS,  _______, _______,  _______,  _______, _______, _______, _______, DYN_MACRO_PLAY1, DYN_MACRO_PLAY2,_______,DYN_REC_STOP},
-  {_______,_______,_______,LAYERRESET,XXXXXXX,XXXXXXX,XXXXXXX,LAYERRESET,    KC_MNXT, KC_VOLD, KC_VOLU, KC_MPLY}
+  {_______,_______,_______,LAYERRESET,XXXXXXX,XXXXXXX,XXXXXXX,LAYERQK_BOOT,  KC_MNXT, KC_VOLD, KC_VOLU, KC_MPLY}
 },
 [_PLOVER] = {
   {KC_1,    KC_1,    KC_1,    KC_1,    KC_1,    KC_1,    KC_1,    KC_1,    KC_1,    KC_1,    KC_1,    KC_1   },
@@ -57,7 +57,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   {LAYERRESET, XXXXXXX, KC_C,    KC_V,   XXXXXXX ,  XXXXXXX, XXXXXXX, KC_N,    KC_M,    XXXXXXX, XXXXXXX, XXXXXXX}
 },
 [_ADJUST] = {
- {_______ , RESET,   _______, _______, _______, _______, _______, _______, KC_SLCK, KC_PAUS, KC_PSCR, KC_DEL },
+ {_______ , QK_BOOT, _______, _______, _______, _______, _______, _______, KC_SLCK, KC_PAUS, KC_PSCR, KC_DEL },
  {_______ , _______, _______, _______, _______,  AG_NORM, AG_SWAP, QWERTY,  _______, MACSLEEP,  PLOVER, _______},
  {_______ , _______,  _______,  _______,   _______,  _______,   _______,  _______, _______, _______, _______, _______},
  {BACKLIT, _______, _______, LAYERRESET, XXXXXXX, XXXXXXX, XXXXXXX, _______, _______, _______, _______, _______}
@@ -82,11 +82,6 @@ void persistant_default_layer_set(uint16_t default_layer) {
   default_layer_set(default_layer);
 }
 
-const uint16_t PROGMEM fn_actions[] = {
- [_FKEYS] = ACTION_LAYER_TAP_KEY(_FKEYS, KC_TAB),
- [_FKEYGRV] = ACTION_LAYER_TAP_KEY(_FKEYS, KC_GRV),
-};
-
 const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
 {
       switch(id) {
@@ -104,7 +99,7 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
               if (record->event.pressed) {
               #ifdef AUDIO_ENABLE
                 stop_all_notes();
-                PLAY_NOTE_ARRAY(tone_plover, false, 0);
+                PLAY_SONG(tone_plover);
               #endif
               layer_off(_NUMSYM);
               layer_off(_FKEYS);
@@ -115,7 +110,7 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
         case 7: // LAYERRESET
               if (record->event.pressed) {
               #ifdef AUDIO_ENABLE
-                PLAY_NOTE_ARRAY(tone_qwerty, false, 0);
+                PLAY_SONG(tone_qwerty);
               #endif
               layer_off(_NUMSYM);
               layer_off(_FKEYS);
@@ -137,7 +132,7 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
           if(record->event.pressed) {
             #ifdef AUDIO_ENABLE
               stop_all_notes();
-              PLAY_NOTE_ARRAY(tone_adjust, false, 0);
+              PLAY_SONG(tone_adjust);
             #endif
             layer_off(_NUMSYM);
             layer_off(_FKEYS);
@@ -171,12 +166,12 @@ void matrix_init_user(void) {
 void startup_user()
 {
     _delay_ms(20); // gets rid of tick
-    PLAY_NOTE_ARRAY(tone_startup, false, 0);
+    PLAY_SONG(tone_startup);
 }
 
 void shutdown_user()
 {
-    PLAY_NOTE_ARRAY(tone_goodbye, false, 0);
+    PLAY_SONG(tone_goodbye);
     _delay_ms(150);
     stop_all_notes();
 }
@@ -188,6 +183,6 @@ void music_on_user(void)
 
 void music_scale_user(void)
 {
-    PLAY_NOTE_ARRAY(music_scale, false, 0);
+    PLAY_SONG(music_scale);
 }
 #endif

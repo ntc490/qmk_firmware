@@ -34,8 +34,8 @@ enum planck_keycodes {
 #include "dynamic_macro.h"
 
 // Key code names
-#define SFT_ENT  FUNC(0)    // Tap for enter, hold for right shift
-#define LOCK     FUNC(1)
+#define SFT_ENT  MT(MOD_RSFT, KC_ENT)    // Tap for enter, hold for right shift
+#define LOCK     TG(_LOCKED)
 #define KC_PSTE  KC_PASTE
 #define ZOOM_IN  LCTL(KC_EQL)
 #define ZOOM_OUT LCTL(KC_MINS)
@@ -54,12 +54,6 @@ qk_tap_dance_action_t tap_dance_actions[] = {
     [0]  = ACTION_TAP_DANCE_DOUBLE(KC_LSFT, KC_CAPS)
 };
 #endif
-
-// Function definitions
-const uint16_t PROGMEM fn_actions[] = {
-    [0] = ACTION_MODS_TAP_KEY(MOD_RSFT, KC_ENT),
-    [1] = ACTION_LAYER_TOGGLE(_LOCKED)
-};
 
 // Layout definitions
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -205,7 +199,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	KC_SLEP, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_PWR,
 	KC_WAKE, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
 	XXXXXXX, XXXXXXX, XXXXXXX, AU_OFF,  MU_OFF,  QWERTY,  NUMPAD,  MU_ON,   AU_ON,   XXXXXXX, MUV_IN,  KC_SYSREQ,
-	RESET,   XXXXXXX, LOCK,    XXXXXXX, _______, XXXXXXX, XXXXXXX, _______, XXXXXXX, AG_NORM, MUV_DE,  AG_SWAP
+	QK_BOOT, XXXXXXX, LOCK,    XXXXXXX, _______, XXXXXXX, XXXXXXX, _______, XXXXXXX, AG_NORM, MUV_DE,  AG_SWAP
 )
 
 };

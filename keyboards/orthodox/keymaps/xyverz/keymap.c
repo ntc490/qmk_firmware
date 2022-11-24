@@ -45,7 +45,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_ADJUST] = LAYOUT ( \
   KC_F11,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,                                                                  KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F12 , \
-  _______, RESET,   _______, _______, _______, _______,          _______, _______,          _______, _______,          _______, QWERTY , COLEMAK, DVORAK,  _______, _______, \
+  _______, QK_BOOT, _______, _______, _______, _______,          _______, _______,          _______, _______,          _______, QWERTY , COLEMAK, DVORAK,  _______, _______, \
   _______, _______, _______, _______, _______, _______, _______, _______, _______,          _______, _______, _______, _______, _______, _______, _______, _______, _______ \
 )
 
@@ -63,9 +63,7 @@ void matrix_init_user(void) {
 #ifdef BOOTLOADER_CATERINA
     // This will disable the red LEDs on the ProMicros
     setPinInput(D5);
-    writePinLow(D5);
     setPinInput(B0);
-    writePinLow(B0);
 #endif
 };
 

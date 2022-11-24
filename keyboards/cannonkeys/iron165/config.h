@@ -17,16 +17,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-/* USB Device descriptor parameter */
-#define VENDOR_ID       0x5A12
-#define PRODUCT_ID      0x5165
-#define DEVICE_VER      0x0001
-/* in python2: list(u"whatever".encode('utf-16-le')) */
-/*   at most 32 characters or the ugly hack in usb_main.c borks */
-#define MANUFACTURER SmithAndRune
-#define PRODUCT Iron165
-#define DESCRIPTION Iron165 Keyboard
-
 /* key matrix size */
 #define MATRIX_ROWS 5
 #define MATRIX_COLS 16
@@ -35,6 +25,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define MATRIX_ROW_PINS { B12, B13, B14, B15, A1 }
 #define DIODE_DIRECTION COL2ROW
 
+#define BACKLIGHT_PIN           A6
+#define BACKLIGHT_PWM_DRIVER    PWMD3
+#define BACKLIGHT_PWM_CHANNEL   1
+#define BACKLIGHT_PAL_MODE      1
 #define BACKLIGHT_LEVELS 6
 #define BACKLIGHT_BREATHING
 #define BREATHING_PERIOD 6
@@ -50,9 +44,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 /* Locking resynchronize hack */
 #define LOCKING_RESYNC_ENABLE
 
-// Backlight config starts after VIA's EEPROM usage,
-// dynamic keymaps start after this.
-#define VIA_EEPROM_CUSTOM_CONFIG_SIZE 1
 
 /*
  * Feature disable options
@@ -69,5 +60,3 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //#define NO_ACTION_LAYER
 //#define NO_ACTION_TAPPING
 //#define NO_ACTION_ONESHOT
-//#define NO_ACTION_MACRO
-//#define NO_ACTION_FUNCTION
