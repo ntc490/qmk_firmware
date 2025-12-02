@@ -43,6 +43,15 @@
 #define MATRIX_COLS 6  // 6 columns per side
 
 /*
+ * Tapping configuration for home row mods
+ * These settings improve the behavior of mod-tap keys
+ */
+#define TAPPING_TERM 200                    // Default tapping term (ms) - matches KMK tap_time
+#define PERMISSIVE_HOLD                     // Makes tap/hold more predictable
+#define HOLD_ON_OTHER_KEY_PRESS_PER_KEY     // Allow per-key hold behavior (defined in keymap.c)
+#define TAPPING_TERM_PER_KEY                // Allow per-key tapping term (defined in keymap.c)
+
+/*
  * Feature disable options
  * These options are also useful to firmware size reduction.
  */

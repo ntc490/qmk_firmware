@@ -75,29 +75,100 @@ If you prefer to hardcode the master side instead of using EEPROM:
 2. Comment out `#define EE_HANDS`
 3. Uncomment `#define MASTER_RIGHT`
 
-## Layout
+## Keymap
+
+This keymap is ported from the original KMK configuration with home row mods and multiple layers.
+
+### Layers
+
+The default keymap includes 4 layers:
+1. **QWERTY** - Base typing layer with home row mods
+2. **NUMS** - Numbers and symbols
+3. **FKEYS** - Function keys
+4. **POWER** - Navigation (arrows, page up/down, next window)
+
+### Home Row Mods
+
+The keyboard uses **GASC** order (GUI, ALT, SHIFT, CTRL) for home row modifiers:
+
+**Left hand:**
+- A = GUI (tap A, hold for GUI/Cmd/Win)
+- S = ALT
+- D = SHIFT
+- F = CTRL
+
+**Right hand:** (mirrored)
+- J = CTRL
+- K = SHIFT
+- L = ALT
+- ; = GUI
+
+**Tapping behavior:**
+- Tap time: 200ms (matches original KMK config)
+- `prefer_hold: False` - Won't activate mod if another key is pressed during hold
+
+### Special Keys
+
+- **TAB** (hold) - Activates POWER layer
+- **Bottom-right corner key** - Momentary FKEYS layer
+- **Both thumb NUMS keys** - Momentary NUMS layer
+
+### Layer Details
 
 ```
-QWERTY (Base Layer)
-┌─────┬─────┬─────┬─────┬─────┬─────┐     ┌─────┬─────┬─────┬─────┬─────┬─────┐
-│ ESC │  Q  │  W  │  E  │  R  │  T  │     │  Y  │  U  │  I  │  O  │  P  │ BSPC│
-├─────┼─────┼─────┼─────┼─────┼─────┤     ├─────┼─────┼─────┼─────┼─────┼─────┤
-│ TAB │  A  │  S  │  D  │  F  │  G  │     │  H  │  J  │  K  │  L  │  ;  │  '  │
-├─────┼─────┼─────┼─────┼─────┼─────┤     ├─────┼─────┼─────┼─────┼─────┼─────┤
-│LSHFT│  Z  │  X  │  C  │  V  │  B  │     │  N  │  M  │  ,  │  .  │  /  │RSHFT│
-└─────┴─────┴─────┼─────┼─────┼─────┤     ├─────┼─────┼─────┼─────┴─────┴─────┘
-                  │LCTRL│LOWER│ SPC │     │ ENT │RAISE│RALT │
-                  └─────┴─────┴─────┘     └─────┴─────┴─────┘
-```
+QWERTY Layer
++-----+-----+-----+-----+-----+-----+     +-----+-----+-----+-----+-----+-----+
+| ESC |  Q  |  W  |  E  |  R  |  T  |     |  Y  |  U  |  I  |  O  |  P  |  \  |
++-----+-----+-----+-----+-----+-----+     +-----+-----+-----+-----+-----+-----+
+|TAB^P| A^G | S^A | D^S | F^C |  G  |     |  H  | J^C | K^S | L^A | ;^G |  '  |
++-----+-----+-----+-----+-----+-----+     +-----+-----+-----+-----+-----+-----+
+|LSHFT|  Z  |  X  |  C  |  V  |  B  |     |  N  |  M  |  ,  |  .  |  /  |FKEYS|
++-----+-----+-----+-----+-----+-----+     +-----+-----+-----+-----+-----+-----+
+                  |BKSP |LCTRL| NUMS|     | NUMS| ENT | SPC |
+                  +-----+-----+-----+     +-----+-----+-----+
+^G=GUI ^A=ALT ^S=SHIFT ^C=CTRL ^P=POWER(hold)
 
-The default keymap includes:
-- Base layer (QWERTY)
-- Lower layer (numbers & symbols)
-- Raise layer (function keys & navigation)
-- Adjust layer (activated when both Lower and Raise are held)
+NUMS Layer
++-----+-----+-----+-----+-----+-----+     +-----+-----+-----+-----+-----+-----+
+|     |  `  |     |     |  (  |  )  |     |  =  |  7  |  8  |  9  |  [  |  ]  |
++-----+-----+-----+-----+-----+-----+     +-----+-----+-----+-----+-----+-----+
+|CAPS |     |     |     | {^C |  }  |     |  -  | 4^C | 5^S | 6^A | '^G |     |
++-----+-----+-----+-----+-----+-----+     +-----+-----+-----+-----+-----+-----+
+|     |     |     | ESC |  [  |  ]  |     |  .  |  1  |  2  |  3  |     |     |
++-----+-----+-----+-----+-----+-----+     +-----+-----+-----+-----+-----+-----+
+                  |     |     |     |     |     |     |  0  |
+                  +-----+-----+-----+     +-----+-----+-----+
+Home row mods on 4, 5, 6, and quote
+
+FKEYS Layer
++-----+-----+-----+-----+-----+-----+     +-----+-----+-----+-----+-----+-----+
+|     |     |     |     |     |     |     | F10 | F7  | F8  | F9  | F13 |     |
++-----+-----+-----+-----+-----+-----+     +-----+-----+-----+-----+-----+-----+
+|     |     |     |     |     |     |     | F11 | F4  | F5  | F6  | F14 |     |
++-----+-----+-----+-----+-----+-----+     +-----+-----+-----+-----+-----+-----+
+|     |     |     |     |     |     |     | F12 | F1  | F2  | F3  | F15 |     |
++-----+-----+-----+-----+-----+-----+     +-----+-----+-----+-----+-----+-----+
+                  |     |     |     |     |     |     |     |
+                  +-----+-----+-----+     +-----+-----+-----+
+
+POWER Layer (accessed by holding TAB)
++-----+-----+-----+-----+-----+-----+     +-----+-----+-----+-----+-----+-----+
+|     |     |     |     |     |     |     |PGDN |PGUP |     |     |     |     |
++-----+-----+-----+-----+-----+-----+     +-----+-----+-----+-----+-----+-----+
+|     |     |     |     |     |     |     |LEFT |DOWN | UP  |RIGHT|     |     |
++-----+-----+-----+-----+-----+-----+     +-----+-----+-----+-----+-----+-----+
+|     |     |     |     |     |     |     |NXTW |     |     |     |     |     |
++-----+-----+-----+-----+-----+-----+     +-----+-----+-----+-----+-----+-----+
+                  |     |     |     |     |     |     |     |
+                  +-----+-----+-----+     +-----+-----+-----+
+NXTW = Next Window (Cmd+Grave)
+```
 
 ## Notes
 
-- The original KMK configuration includes haptic feedback via I2C (GP26/GP27), which is not implemented in this QMK port
+- Ported from KMK configuration with home row mods
+- Haptic feedback (DRV2605 on I2C GP26/GP27) not implemented in QMK port
+- KEEP key from KMK not implemented (was used for KMK's Keeper module)
+- Home row mod timing matches original KMK config (200ms tap time)
 - Modify `keymaps/default/keymap.c` to customize your layout
 - The baud rate can be adjusted in `config.h` if needed
