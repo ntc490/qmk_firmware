@@ -19,8 +19,9 @@
     },
     "split": {
         "enabled": true,
-        "serial": {
-            "driver": "vendor"
+        "soft_serial_pin": "GP1",
+        "transport": {
+            "protocol": "serial"
         },
         "main": "right"
     },
@@ -31,6 +32,10 @@
             ["GP19", "GP18", "GP17", "GP16", "GP15", "GP14"],
             [null,   null,   null,   "GP22", "GP21", "GP20"]
         ]
+    },
+    "matrix_size": {
+        "cols": 6,
+        "rows": 8
     },
     "layouts": {
         "LAYOUT_split_3x6_3": {
