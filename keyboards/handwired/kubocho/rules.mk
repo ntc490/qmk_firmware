@@ -5,26 +5,11 @@ MCU = RP2040
 BOOTLOADER = rp2040
 
 # Build Options
-#   change yes to no to disable
-#
-BOOTMAGIC_ENABLE = yes      # Enable Bootmagic Lite
-MOUSEKEY_ENABLE = yes       # Mouse keys
-EXTRAKEY_ENABLE = yes       # Audio control and System control
-CONSOLE_ENABLE = no         # Console for debug
-COMMAND_ENABLE = no         # Commands for debug and configuration
-NKRO_ENABLE = yes           # Enable N-Key Rollover
-BACKLIGHT_ENABLE = no       # Enable keyboard backlight functionality
-RGBLIGHT_ENABLE = no        # Enable keyboard RGB underglow
-AUDIO_ENABLE = no           # Audio output
-
 # Disable LTO to avoid compiler warnings with newer GCC
 LTO_ENABLE = no
 
 # Allow compiler warnings (needed for newer GCC with RP2040)
 ALLOW_WARNINGS = yes
-
-# Split keyboard settings
-SPLIT_KEYBOARD = yes
 
 # Serial/UART driver for RP2040
 SERIAL_DRIVER = vendor      # Use RP2040 PIO-based serial driver

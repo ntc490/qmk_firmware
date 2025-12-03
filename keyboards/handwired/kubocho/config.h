@@ -15,7 +15,6 @@
 /* Serial/UART configuration for split communication */
 // RP2040 uses PIO-based serial driver
 #define SERIAL_PIO_USE_PIO0         // Use PIO0 peripheral
-#define SOFT_SERIAL_PIN GP1         // Primary serial pin (matches KMK data_pin)
 
 /*
  * Tapping configuration for home row mods
