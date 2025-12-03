@@ -11,11 +11,6 @@ enum layers {
     _POWER
 };
 
-// Custom keycodes (if needed for future expansion)
-enum custom_keycodes {
-    // Placeholder for custom keys
-};
-
 // Layer access keys
 #define NUM_LYR MO(_NUMS)
 #define FKEY_LYR MO(_FKEYS)

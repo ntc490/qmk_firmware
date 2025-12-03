@@ -13,17 +13,9 @@
 #define EE_HANDS  // Use EEPROM to store handedness
 
 /* Serial/UART configuration for split communication */
-#define SERIAL_USART_FULL_DUPLEX    // Enable full duplex operation
-#define SERIAL_USART_TX_PIN GP1     // UART TX pin (matches KMK data_pin)
-#define SERIAL_USART_RX_PIN GP0     // UART RX pin (matches KMK data_pin2)
-
-/*
- * Serial driver configuration - RP2040 uses PIO-based serial
- * The "vendor" driver in info.json enables the RP2040 PIO implementation
- */
+// RP2040 uses PIO-based serial driver
 #define SERIAL_PIO_USE_PIO0         // Use PIO0 peripheral
-#define SERIAL_USART_TIMEOUT 100    // USART driver timeout (ms)
-#define SERIAL_USART_SPEED 38400    // Baud rate for serial communication
+#define SOFT_SERIAL_PIN GP1         // Primary serial pin (matches KMK data_pin)
 
 /*
  * Tapping configuration for home row mods
