@@ -11,6 +11,11 @@ enum layers {
     _POWER
 };
 
+// Custom keycodes
+enum custom_keycodes {
+    KEEPER_TGL = SAFE_RANGE,  // Toggle keeper (keep-awake) feature
+};
+
 // Layer access keys
 #define NUM_LYR MO(_NUMS)
 #define FKEY_LYR MO(_FKEYS)
@@ -41,6 +46,11 @@ enum layers {
 // Home row mods for numbers layer - Left hand
 #define CTRL_LB LCTL_T(KC_LCBR)  // Left curly brace with ctrl
 
+// Keeper (keep-awake) state
+static bool keeper_enabled = false;
+static uint32_t last_activity_time = 0;
+#define KEEPER_TIMEOUT 60000  // 60 seconds in milliseconds
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /*
      * QWERTY Layer
@@ -66,7 +76,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /*
      * Numbers Layer
      * +-----+-----+-----+-----+-----+-----+     +-----+-----+-----+-----+-----+-----+
-     * |     |  `  | XXX |     |  (  |  )  |     |  =  |  7  |  8  |  9  |  [  |  ]  |
+     * |     |  `  | XXX |KEEPR|  (  |  )  |     |  =  |  7  |  8  |  9  |  [  |  ]  |
      * +-----+-----+-----+-----+-----+-----+     +-----+-----+-----+-----+-----+-----+
      * |CAPS |     |     |     | {^C |  }  |     |  -  | 4^C | 5^S | 6^A | '^G |     |
      * +-----+-----+-----+-----+-----+-----+     +-----+-----+-----+-----+-----+-----+
@@ -76,10 +86,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      *                   +-----+-----+-----+     +-----+-----+-----+
      *
      * Note: Home row mods poke through where _____ is used
-     * XXX = KC.KEEP in KMK (not implemented)
+     * XXX = KC.KEEP in KMK (not implemented), KEEPR = Toggle keep-awake
      */
     [_NUMS] = LAYOUT_split_3x6_3(
-        _______, KC_GRV,  KC_NO,   _______, KC_LPRN, KC_RPRN,     KC_EQL,  KC_7,    KC_8,    KC_9,    KC_LBRC, KC_RBRC,
+        _______, KC_GRV,  KC_NO,   KEEPER_TGL, KC_LPRN, KC_RPRN,     KC_EQL,  KC_7,    KC_8,    KC_9,    KC_LBRC, KC_RBRC,
         KC_CAPS, _______, _______, _______, CTRL_LB, KC_RCBR,     KC_MINS, CTRL_4,  SHFT_5,  ALT_6,   GUI_QUOT,_______,
         _______, _______, _______, KC_ESC,  KC_LBRC, KC_RBRC,     KC_DOT,  KC_1,    KC_2,    KC_3,    _______, _______,
                                    _______, _______, _______,     _______, _______, KC_0
@@ -166,5 +176,43 @@ bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
             return false;  // Don't hold on other key press (prefer_hold: False)
         default:
             return true;
+    }
+}
+
+// Process custom keycodes and track activity for keeper
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    // Reset keeper timer on any keypress
+    if (record->event.pressed && keeper_enabled) {
+        last_activity_time = timer_read32();
+    }
+
+    // Handle custom keycodes
+    switch (keycode) {
+        case KEEPER_TGL:
+            if (record->event.pressed) {
+                keeper_enabled = !keeper_enabled;
+                if (keeper_enabled) {
+                    last_activity_time = timer_read32();
+                }
+            }
+            return false;  // Don't process this key further
+    }
+
+    return true;  // Process all other keycodes normally
+}
+
+// Keeper: Check timer and send shift if idle too long
+void matrix_scan_user(void) {
+    if (!keeper_enabled) {
+        return;
+    }
+
+    // Check if we've been idle for longer than the timeout
+    if (timer_elapsed32(last_activity_time) > KEEPER_TIMEOUT) {
+        // Send a shift press/release to keep the system awake
+        tap_code(KC_LSFT);
+
+        // Reset the timer
+        last_activity_time = timer_read32();
     }
 }
