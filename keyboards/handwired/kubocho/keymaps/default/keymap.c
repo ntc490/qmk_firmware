@@ -14,6 +14,7 @@ enum layers {
 // Custom keycodes
 enum custom_keycodes {
     KEEPER_TGL = SAFE_RANGE,  // Toggle keeper (keep-awake) feature
+    CTRL_LCBR,                // Ctrl on hold, { on tap (custom implementation)
 };
 
 // Layer access keys
@@ -43,13 +44,17 @@ enum custom_keycodes {
 #define ALT_6   LALT_T(KC_6)
 #define GUI_QUOT LGUI_T(KC_QUOT)
 
-// Home row mods for numbers layer - Left hand
-#define CTRL_LB LCTL_T(KC_LCBR)  // Left curly brace with ctrl
+// Note: CTRL_LCBR is a custom keycode defined in enum above
+// (can't use LCTL_T(KC_LCBR) because shifted keys don't work in mod-taps)
 
 // Keeper (keep-awake) state
 static bool keeper_enabled = false;
 static uint32_t last_activity_time = 0;
 #define KEEPER_TIMEOUT 60000  // 60 seconds in milliseconds
+
+// CTRL_LCBR (Ctrl-tap with {) state
+static bool ctrl_lcbr_pressed = false;
+static uint16_t ctrl_lcbr_timer = 0;
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /*
@@ -90,7 +95,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      */
     [_NUMS] = LAYOUT_split_3x6_3(
         _______, KC_GRV,  KC_NO,   KEEPER_TGL, KC_LPRN, KC_RPRN,     KC_EQL,  KC_7,    KC_8,    KC_9,    KC_LBRC, KC_RBRC,
-        KC_CAPS, _______, _______, _______, CTRL_LB, KC_RCBR,     KC_MINS, CTRL_4,  SHFT_5,  ALT_6,   GUI_QUOT,_______,
+        KC_CAPS, _______, _______, _______, CTRL_LCBR, KC_RCBR,     KC_MINS, CTRL_4,  SHFT_5,  ALT_6,   GUI_QUOT,_______,
         _______, _______, _______, KC_ESC,  KC_LBRC, KC_RBRC,     KC_DOT,  KC_1,    KC_2,    KC_3,    _______, _______,
                                    _______, _______, _______,     _______, _______, KC_0
     ),
@@ -194,6 +199,28 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
     // Handle custom keycodes
     switch (keycode) {
+        case CTRL_LCBR:
+            if (record->event.pressed) {
+                // Key pressed - start timer
+                ctrl_lcbr_pressed = true;
+                ctrl_lcbr_timer = timer_read();
+            } else {
+                // Key released
+                if (ctrl_lcbr_pressed) {
+                    if (timer_elapsed(ctrl_lcbr_timer) < TAPPING_TERM) {
+                        // Tapped - send { (Shift+[)
+                        register_code(KC_LSFT);
+                        tap_code(KC_LBRC);
+                        unregister_code(KC_LSFT);
+                    } else {
+                        // Held - unregister ctrl
+                        unregister_code(KC_LCTL);
+                    }
+                    ctrl_lcbr_pressed = false;
+                }
+            }
+            return false;  // Don't process this key further
+
         case KEEPER_TGL:
             if (record->event.pressed) {
                 keeper_enabled = !keeper_enabled;
@@ -208,17 +235,24 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 }
 
 // Keeper: Check timer and send shift if idle too long
+// Also check for CTRL_LCBR hold detection
 void matrix_scan_user(void) {
-    if (!keeper_enabled) {
-        return;
+    // CTRL_LCBR hold detection
+    if (ctrl_lcbr_pressed && timer_elapsed(ctrl_lcbr_timer) >= TAPPING_TERM) {
+        // Held long enough - register ctrl
+        register_code(KC_LCTL);
+        ctrl_lcbr_pressed = false;  // Prevent re-triggering
     }
 
-    // Check if we've been idle for longer than the timeout
-    if (timer_elapsed32(last_activity_time) > KEEPER_TIMEOUT) {
-        // Send a shift press/release to keep the system awake
-        tap_code(KC_LSFT);
+    // Keeper logic
+    if (keeper_enabled) {
+        // Check if we've been idle for longer than the timeout
+        if (timer_elapsed32(last_activity_time) > KEEPER_TIMEOUT) {
+            // Send a shift press/release to keep the system awake
+            tap_code(KC_LSFT);
 
-        // Reset the timer
-        last_activity_time = timer_read32();
+            // Reset the timer
+            last_activity_time = timer_read32();
+        }
     }
 }
