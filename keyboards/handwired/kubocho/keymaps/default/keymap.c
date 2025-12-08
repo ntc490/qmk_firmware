@@ -32,16 +32,16 @@ enum custom_keycodes {
 #define CTRL_F  LCTL_T(KC_F)
 
 // Home row mods - Right hand (mirrored: CTRL, SHIFT, ALT, GUI)
-#define CTRL_J  RCTL_T(KC_J)
-#define SHFT_K  RSFT_T(KC_K)
+#define CTRL_J  LCTL_T(KC_J)
+#define SHFT_K  LSFT_T(KC_K)
 #define ALT_L   LALT_T(KC_L)
-#define GUI_SEMI RGUI_T(KC_SCLN)
+#define GUI_SEMI LGUI_T(KC_SCLN)
 
 // Home row mods for numbers layer - Right hand
-#define CTRL_4  RCTL_T(KC_4)
-#define SHFT_5  RSFT_T(KC_5)
+#define CTRL_4  LCTL_T(KC_4)
+#define SHFT_5  LSFT_T(KC_5)
 #define ALT_6   LALT_T(KC_6)
-#define GUI_QUOT RGUI_T(KC_QUOT)
+#define GUI_QUOT LGUI_T(KC_QUOT)
 
 // Home row mods for numbers layer - Left hand
 #define CTRL_LB LCTL_T(KC_LCBR)  // Left curly brace with ctrl
@@ -136,10 +136,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     )
 };
 
-// Optional: Add tap/hold configuration for better home row mod behavior
+// Per-key tap/hold configuration - DISABLED for now to use QMK defaults
+// Uncomment and re-enable TAPPING_TERM_PER_KEY in config.h if needed
+/*
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        // Home row mods can have custom tapping terms
         case GUI_A:
         case ALT_S:
         case SHFT_D:
@@ -148,18 +149,22 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         case SHFT_K:
         case ALT_L:
         case GUI_SEMI:
-            return 200;  // Match KMK's tap_time = 200
+            return 200;
         default:
             return TAPPING_TERM;
     }
 }
+*/
 
-// Optional: Configure per-key mod-tap behavior
-// This helps prevent accidental mod activation
+// Per-key hold-on-other-key-press configuration - DISABLED for now to use QMK defaults
+// Uncomment and re-enable HOLD_ON_OTHER_KEY_PRESS_PER_KEY in config.h if needed
+/*
 bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        // For home row mods, don't activate hold on other key press
-        // This matches KMK's prefer_hold = False behavior
+        case TAB_PWR:
+        case NUM_LYR:
+        case FKEY_LYR:
+            return true;
         case GUI_A:
         case ALT_S:
         case SHFT_D:
@@ -173,11 +178,12 @@ bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
         case ALT_6:
         case GUI_QUOT:
         case CTRL_LB:
-            return false;  // Don't hold on other key press (prefer_hold: False)
+            return false;
         default:
-            return true;
+            return false;
     }
 }
+*/
 
 // Process custom keycodes and track activity for keeper
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {

@@ -18,12 +18,10 @@
 
 /*
  * Tapping configuration for home row mods
- * These settings improve the behavior of mod-tap keys
+ * These settings handle bilateral combinations (two home row mods pressed quickly)
  */
-#define TAPPING_TERM 200                    // Default tapping term (ms) - matches KMK tap_time
-#define PERMISSIVE_HOLD                     // Makes tap/hold more predictable
-#define HOLD_ON_OTHER_KEY_PRESS_PER_KEY     // Allow per-key hold behavior (defined in keymap.c)
-#define TAPPING_TERM_PER_KEY                // Allow per-key tapping term (defined in keymap.c)
+#define TAPPING_TERM 200                    // Tapping term (ms) - matches KMK tap_time
+#define IGNORE_MOD_TAP_INTERRUPT            // Prevent MT+MT from activating mods prematurely
 
 /*
  * Feature disable options
