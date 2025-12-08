@@ -1,0 +1,36 @@
+    Raspberry Pi PICO Pin Mapping
+    =============================
+
+              VBUS  40          I2C0_SDA/U0_TX   1  GP0   TX      *2
+RJ11-P2       VSYS  39          I2C0_SCL/U0_RX   2  GP1   RX      *2      RJ11-P1
+RJ11-P3        GND  38                           3  GND
+              3.3EN 37                           4  GP2   Y
+              3.3VO 36                           5  GP3   U
+              ADCR  35                           6  GP4   I
+      *1      GP28  34 ADC2                      7  GP5   O
+              AGND  33                           8  GND
+      *1      GP27  32 ADC1/I2C1_SCL             9  GP6   P
+      *1      GP26  31 ADC0/I2C1_SDA            10  GP7   \
+              RUN   30                          11  GP8   H
+C    +-- LYR  GP22  29                          12  GP9   J
+L    |        GND   28                          13  GND
+S    |   ENT  GP21  27 I2C0_SCL                 14  GP10  K
+T    +-- SPC  GP20  26 I2C0_SDA                 15  GP11  L
+         SFT  GP19  25                          16  GP12  ;
+           /  GP18  24                          17  GP13  '
+              GND   23                          18  GND
+           .  GP17  22                          19  GP14  N
+           ,  GP16  21                          20  GP15  M
+
+
+    RJ-11 Pinout
+    ============
+
+Pin1 - Slave TX, Master RX
+Pin2 - VSYS
+Pin3 - GND
+Pin4 - NC
+
+Notes:
+1 - Could be used for backlighting, custom switches, etc
+2 - Swap to I2C in a more modular design

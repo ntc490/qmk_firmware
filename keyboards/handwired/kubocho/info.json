@@ -26,10 +26,11 @@
     },
     "matrix_pins": {
         "direct": [
+	    // Right hand pin-mapping. Left side is mirror.
             ["GP2",  "GP3",  "GP4",  "GP5",  "GP6",  "GP7"],
-            ["GP13", "GP12", "GP11", "GP10", "GP9",  "GP8"],
-            ["GP19", "GP18", "GP17", "GP16", "GP15", "GP14"],
-            [null,   null,   null,   "GP22", "GP21", "GP20"]
+            ["GP8",  "GP9",  "GP10", "GP11", "GP12", "GP13"],
+            ["GP14", "GP15", "GP16", "GP17", "GP18", "GP19"],
+            ["GP20", "GP21", "GP22",  null,   null,   null]
         ]
     },
     "matrix_size": {
@@ -45,6 +46,7 @@
                 {"matrix": [0, 3], "x": 3, "y": 0},
                 {"matrix": [0, 4], "x": 4, "y": 0},
                 {"matrix": [0, 5], "x": 5, "y": 0},
+
 
                 {"matrix": [4, 0], "x": 7, "y": 0},
                 {"matrix": [4, 1], "x": 8, "y": 0},
@@ -81,13 +83,13 @@
                 {"matrix": [6, 4], "x": 11, "y": 2},
                 {"matrix": [6, 5], "x": 12, "y": 2},
 
-                {"matrix": [3, 3], "x": 3, "y": 3},
-                {"matrix": [3, 4], "x": 4, "y": 3},
-                {"matrix": [3, 5], "x": 5, "y": 3},
+                {"matrix": [3, 0], "x": 3, "y": 3},
+                {"matrix": [3, 1], "x": 4, "y": 3},
+                {"matrix": [3, 2], "x": 5, "y": 3},
 
-                {"matrix": [7, 3], "x": 7, "y": 3},
-                {"matrix": [7, 4], "x": 8, "y": 3},
-                {"matrix": [7, 5], "x": 9, "y": 3}
+                {"matrix": [7, 0], "x": 7, "y": 3},
+                {"matrix": [7, 1], "x": 8, "y": 3},
+                {"matrix": [7, 2], "x": 9, "y": 3}
             ]
         }
     }

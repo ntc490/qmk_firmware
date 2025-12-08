@@ -12,15 +12,15 @@ A 42-key split keyboard using Raspberry Pi Pico (RP2040) MCUs with direct pin wi
 
 ## Pin Mapping
 
-### Left Side
+### Right Side
 ```
-Row 0: GP7,  GP6,  GP5,  GP4,  GP3,  GP2
-Row 1: GP13, GP12, GP11, GP10, GP9,  GP8
-Row 2: GP19, GP18, GP17, GP16, GP15, GP14
-Row 3: -,    -,    -,    GP22, GP21, GP20
+Row 0: GP2,  GP3,  GP4,  GP5,  GP6,  GP7
+Row 1: GP8,  GP9,  GP10, GP11, GP12, GP13
+Row 2: GP14, GP15, GP16, GP17, GP18, GP19
+Row 3: GP20, GP21, GP22, -,    -,    -
 ```
 
-### Right Side
+### Left Side
 Uses the same pins (mirrored layout)
 
 ### Communication
