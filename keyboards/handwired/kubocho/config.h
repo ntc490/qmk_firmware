@@ -14,7 +14,13 @@
 
 /* Serial/UART configuration for split communication */
 // RP2040 uses PIO-based serial driver
+// Full-duplex mode: GP0 (TX) and GP1 (RX) on both halves
+// Cable has crossover on slave side: Master Pin1→Slave Pin1, Master Pin4→Slave Pin4
+// This allows both KMK and QMK to work with the same hardware
 #define SERIAL_PIO_USE_PIO0         // Use PIO0 peripheral
+#define SERIAL_USART_FULL_DUPLEX    // Enable full-duplex communication
+#define SERIAL_USART_TX_PIN GP0     // Transmit on GP0
+#define SERIAL_USART_RX_PIN GP1     // Receive on GP1
 
 /*
  * Tapping configuration for home row mods
