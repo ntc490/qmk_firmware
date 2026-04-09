@@ -256,3 +256,12 @@ void matrix_scan_user(void) {
         }
     }
 }
+
+// Force handedness write on boot when using INIT_EE_HANDS_LEFT/RIGHT
+void keyboard_post_init_user(void) {
+#if defined(INIT_EE_HANDS_LEFT)
+    eeconfig_update_handedness(true);  // Force write LEFT
+#elif defined(INIT_EE_HANDS_RIGHT)
+    eeconfig_update_handedness(false); // Force write RIGHT
+#endif
+}
