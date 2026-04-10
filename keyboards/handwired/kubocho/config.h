@@ -30,6 +30,18 @@
 #define IGNORE_MOD_TAP_INTERRUPT            // Prevent MT+MT from activating mods prematurely
 
 /*
+ * RGB LED configuration (Neopixel on GP23)
+ * One LED on RIGHT side only for keeper status indication
+ */
+#define WS2812_PIO_USE_PIO1     // Use PIO1 (PIO0 is used for serial)
+#define RGB_DI_PIN GP23         // Data pin for neopixel
+#define RGBLED_NUM 1            // One LED on master (right) side only
+// Note: RGBLED_SPLIT and RGBLIGHT_SPLIT are NOT defined - LED only on master
+
+// Enable breathing effect for keeper indicator
+#define RGBLIGHT_EFFECT_BREATHING
+
+/*
  * Feature disable options
  * These options are also useful to firmware size reduction.
  */

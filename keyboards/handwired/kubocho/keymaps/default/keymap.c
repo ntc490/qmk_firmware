@@ -56,6 +56,10 @@ static uint32_t last_activity_time = 0;
 static bool ctrl_lcbr_pressed = false;
 static uint16_t ctrl_lcbr_timer = 0;
 
+// Override breathing intervals - lower = faster, higher = slower
+// Values are in ~65ms ticks. 10 = ~650ms per animation step.
+const uint8_t RGBLED_BREATHING_INTERVALS[] PROGMEM = {10, 10, 10, 10};
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /*
      * QWERTY Layer
@@ -226,6 +230,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 keeper_enabled = !keeper_enabled;
                 if (keeper_enabled) {
                     last_activity_time = timer_read32();
+                    // Turn on breathing effect (right side LED only)
+                    rgblight_enable();
+                    rgblight_sethsv(170, 255, 128);  // Blue color (HSV: hue=170 is blue) - easier to see for colorblind
+                    rgblight_mode(RGBLIGHT_MODE_BREATHING);
+                } else {
+                    // Turn off LED
+                    rgblight_disable();
                 }
             }
             return false;  // Don't process this key further
@@ -264,4 +275,7 @@ void keyboard_post_init_user(void) {
 #elif defined(INIT_EE_HANDS_RIGHT)
     eeconfig_update_handedness(false); // Force write RIGHT
 #endif
+
+    // Initialize RGB to off (will turn on when keeper is enabled)
+    rgblight_disable();
 }

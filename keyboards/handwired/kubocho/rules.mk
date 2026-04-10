@@ -13,3 +13,7 @@ ALLOW_WARNINGS = yes
 
 # Serial/UART driver for RP2040
 SERIAL_DRIVER = vendor      # Use RP2040 PIO-based serial driver
+
+# RGB LED support (WS2812/Neopixel on GP23)
+RGBLIGHT_ENABLE = yes       # Enable RGB lighting
+WS2812_DRIVER = vendor      # Use RP2040 PIO-based WS2812 driver
