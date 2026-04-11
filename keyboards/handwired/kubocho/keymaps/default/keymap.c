@@ -11,9 +11,16 @@ enum layers {
     _POWER
 };
 
+// Keeper mode states
+enum keeper_modes {
+    KEEPER_OFF,
+    KEEPER_MANUAL,
+    KEEPER_PIR
+};
+
 // Custom keycodes
 enum custom_keycodes {
-    KEEPER_TGL = SAFE_RANGE,  // Toggle keeper (keep-awake) feature
+    KEEPER_TGL = SAFE_RANGE,  // Cycle keeper modes: Off → Manual → PIR-gated → Off
     CTRL_LCBR,                // Ctrl on hold, { on tap (custom implementation)
 };
 
@@ -47,8 +54,11 @@ enum custom_keycodes {
 // Note: CTRL_LCBR is a custom keycode defined in enum above
 // (can't use LCTL_T(KC_LCBR) because shifted keys don't work in mod-taps)
 
+// PIR sensor configuration
+#define PIR_PIN GP29  // PIR sensor on GPIO29
+
 // Keeper (keep-awake) state
-static bool keeper_enabled = false;
+static uint8_t keeper_mode = KEEPER_OFF;
 static uint32_t last_activity_time = 0;
 #define KEEPER_TIMEOUT 60000  // 60 seconds in milliseconds
 
@@ -95,7 +105,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      *                   +-----+-----+-----+     +-----+-----+-----+
      *
      * Note: Home row mods poke through where _____ is used
-     * XXX = KC.KEEP in KMK (not implemented), KEEPR = Toggle keep-awake
+     * KEEPR = Cycle keep-awake modes: Off → Manual (blue) → PIR-gated (red) → Off
+     *   Mode 0 (Off): LED off, no tickler
+     *   Mode 1 (Manual): LED blue breathing, tickle when idle 60s
+     *   Mode 2 (PIR): LED red breathing, tickle only when motion detected
      */
     [_NUMS] = LAYOUT_split_3x6_3(
         _______, KC_GRV,  KC_NO,   KEEPER_TGL, KC_LPRN, KC_RPRN,     KC_EQL,  KC_7,    KC_8,    KC_9,    KC_LBRC, KC_RBRC,
@@ -196,12 +209,10 @@ bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
 
 // Process custom keycodes and track activity for keeper
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    // Reset keeper timer on any keypress
-    if (record->event.pressed && keeper_enabled) {
+    if (record->event.pressed && keeper_mode == KEEPER_MANUAL) {
         last_activity_time = timer_read32();
     }
 
-    // Handle custom keycodes
     switch (keycode) {
         case CTRL_LCBR:
             if (record->event.pressed) {
@@ -227,16 +238,25 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
         case KEEPER_TGL:
             if (record->event.pressed) {
-                keeper_enabled = !keeper_enabled;
-                if (keeper_enabled) {
-                    last_activity_time = timer_read32();
-                    // Turn on breathing effect (right side LED only)
-                    rgblight_enable();
-                    rgblight_sethsv(170, 255, 128);  // Blue color (HSV: hue=170 is blue) - easier to see for colorblind
-                    rgblight_mode(RGBLIGHT_MODE_BREATHING);
-                } else {
-                    // Turn off LED
-                    rgblight_disable();
+                keeper_mode = (keeper_mode + 1) % 3;
+
+                switch (keeper_mode) {
+                    case KEEPER_OFF:
+                        rgblight_disable();
+                        break;
+
+                    case KEEPER_MANUAL:
+                        last_activity_time = timer_read32();
+                        rgblight_enable();
+                        rgblight_sethsv(170, 255, 128);  // Blue
+                        rgblight_mode(RGBLIGHT_MODE_BREATHING);
+                        break;
+
+                    case KEEPER_PIR:
+                        rgblight_enable();
+                        rgblight_sethsv(0, 255, 128);  // Red
+                        rgblight_mode(RGBLIGHT_MODE_BREATHING);
+                        break;
                 }
             }
             return false;  // Don't process this key further
@@ -246,7 +266,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 }
 
 // Keeper: Check timer and send shift if idle too long
-// Also check for CTRL_LCBR hold detection
+// Also check for CTRL_LCBR hold detection and PIR sensor
 void matrix_scan_user(void) {
     // CTRL_LCBR hold detection
     if (ctrl_lcbr_pressed && timer_elapsed(ctrl_lcbr_timer) >= TAPPING_TERM) {
@@ -255,15 +275,18 @@ void matrix_scan_user(void) {
         ctrl_lcbr_pressed = false;  // Prevent re-triggering
     }
 
-    // Keeper logic
-    if (keeper_enabled) {
-        // Check if we've been idle for longer than the timeout
+    if (keeper_mode == KEEPER_MANUAL) {
         if (timer_elapsed32(last_activity_time) > KEEPER_TIMEOUT) {
-            // Send a shift press/release to keep the system awake
             tap_code(KC_LSFT);
-
-            // Reset the timer
             last_activity_time = timer_read32();
+        }
+    } else if (keeper_mode == KEEPER_PIR) {
+        if (readPin(PIR_PIN)) {
+            static uint32_t last_pir_tickle = 0;
+            if (timer_elapsed32(last_pir_tickle) > KEEPER_TIMEOUT) {
+                tap_code(KC_LSFT);
+                last_pir_tickle = timer_read32();
+            }
         }
     }
 }
@@ -275,6 +298,9 @@ void keyboard_post_init_user(void) {
 #elif defined(INIT_EE_HANDS_RIGHT)
     eeconfig_update_handedness(false); // Force write RIGHT
 #endif
+
+    // Configure PIR sensor pin as input
+    setPinInputLow(PIR_PIN);
 
     // Initialize RGB to off (will turn on when keeper is enabled)
     rgblight_disable();
