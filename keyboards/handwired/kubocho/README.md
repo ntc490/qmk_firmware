@@ -34,25 +34,25 @@ This keyboard uses `EE_HANDS` for handedness detection, which stores left/right 
 
 ### Initial Setup (First Time Only)
 
-You need to flash hand-specific firmware once to each side to initialize EEPROM:
+You need to flash hand-specific firmware once to each side to initialize EEPROM.
+Build every image (left, right, generic, eeprom_clear) without flashing:
 
 ```bash
-# Activate Python environment
-source venv/bin/activate
-
-# Build left-hand initialization firmware
-make handwired/kubocho:default:uf2-split-left
-
-# Save it
-cp .build/handwired_kubocho_default.uf2 ~/kubocho_left.uf2
-
-# Clean and build right-hand initialization firmware
-rm -rf .build
-make handwired/kubocho:default:uf2-split-right
-
-# Save it
-cp .build/handwired_kubocho_default.uf2 ~/kubocho_right.uf2
+keyboards/handwired/kubocho/build_images.sh            # archives to ~/kubocho_firmware/<date>-<sha>/
+keyboards/handwired/kubocho/build_images.sh /some/dir  # or pick the archive location
 ```
+
+`~/kubocho_firmware/latest` always points at the newest build. Flash images by
+dragging them onto the RPI-RP2 drive, whenever you like.
+
+Note: `make handwired/kubocho:default:uf2-split-left` (and `-right`) still work,
+but current QMK makes them wait for a board to mount and flash it immediately.
+
+**Re-flash the left/right images (not the generic one) whenever EEPROM gets reset:**
+after running `eeprom_clear`, or after a QMK update that changes
+`EECONFIG_MAGIC_NUMBER` (`quantum/nvm/nvm_eeconfig.h`). An erased EEPROM reads as
+"right", so the left half ends up scanning with the right half's pin order and
+its rows come out mirrored (e.g. `F` types `a`).
 
 ### Generic Firmware (After Initial Setup)
 
@@ -62,6 +62,7 @@ Once handedness is initialized, you can flash the same generic firmware to both 
 make handwired/kubocho:default
 
 # The resulting .build/handwired_kubocho_default.uf2 can be flashed to either side
+# (build_images.sh also archives this as kubocho_generic.uf2)
 ```
 
 ### EEPROM Clear Firmware (Optional)
@@ -101,7 +102,7 @@ The first boot writes handedness to EEPROM, but reads the old value. The second 
 Once handedness is set, you can flash the same generic firmware to both sides:
 
 1. Put Pico into bootloader mode
-2. Drag generic `handwired_kubocho_default.uf2` to RPI-RP2 drive
+2. Drag generic `kubocho_generic.uf2` (or `.build/handwired_kubocho_default.uf2`) to RPI-RP2 drive
 3. Works immediately (no second reboot needed)
 
 ### Resetting EEPROM (If Needed)
