@@ -66,6 +66,21 @@ static uint32_t last_activity_time = 0;
 static bool ctrl_lcbr_pressed = false;
 static uint16_t ctrl_lcbr_timer = 0;
 
+// Combos (experimental): press both keys together
+//   Q + W -> Tab
+//   N + M -> Space
+//   V + B -> Space
+const uint16_t PROGMEM combo_qw[] = {KC_Q, KC_W, COMBO_END};
+const uint16_t PROGMEM combo_nm[] = {KC_N, KC_M, COMBO_END};
+const uint16_t PROGMEM combo_vb[] = {KC_V, KC_B, COMBO_END};
+
+combo_t key_combos[] = {
+    COMBO(combo_qw, KC_TAB),
+    COMBO(combo_nm, KC_SPC),
+    COMBO(combo_vb, KC_SPC),
+};
+uint16_t COMBO_LEN = sizeof(key_combos) / sizeof(key_combos[0]);
+
 // Override breathing intervals - lower = faster, higher = slower
 // Values are in ~65ms ticks. 10 = ~650ms per animation step.
 const uint8_t RGBLED_BREATHING_INTERVALS[] PROGMEM = {10, 10, 10, 10};
@@ -242,10 +257,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
                 switch (keeper_mode) {
                     case KEEPER_OFF:
+                        uprintf("Keeper: OFF\n");
                         rgblight_disable();
                         break;
 
                     case KEEPER_MANUAL:
+                        uprintf("Keeper: MANUAL\n");
                         last_activity_time = timer_read32();
                         rgblight_enable();
                         rgblight_sethsv(170, 255, 128);  // Blue
@@ -253,6 +270,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                         break;
 
                     case KEEPER_PIR:
+                        uprintf("Keeper: PIR mode - watching GP29\n");
                         rgblight_enable();
                         rgblight_sethsv(0, 255, 128);  // Red
                         rgblight_mode(RGBLIGHT_MODE_BREATHING);
@@ -281,12 +299,42 @@ void matrix_scan_user(void) {
             last_activity_time = timer_read32();
         }
     } else if (keeper_mode == KEEPER_PIR) {
+        static uint32_t pir_window_start = 0;
+        static bool motion_detected_in_window = false;
+
+        // Debug: print PIR pin state every 5 seconds
+        static uint32_t last_debug_time = 0;
+        if (timer_elapsed32(last_debug_time) > 5000) {
+            bool pin_state = readPin(PIR_PIN);
+            uprintf("PIR pin state: %d\n", pin_state);
+            last_debug_time = timer_read32();
+        }
+
+        // Initialize window timer if not started
+        if (pir_window_start == 0) {
+            pir_window_start = timer_read32();
+            motion_detected_in_window = false;
+        }
+
+        // Check for motion during this window
         if (readPin(PIR_PIN)) {
-            static uint32_t last_pir_tickle = 0;
-            if (timer_elapsed32(last_pir_tickle) > KEEPER_TIMEOUT) {
-                tap_code(KC_LSFT);
-                last_pir_tickle = timer_read32();
+            if (!motion_detected_in_window) {
+                uprintf("PIR: Motion detected in window!\n");
+                motion_detected_in_window = true;
             }
+        }
+
+        // Check if window has elapsed
+        if (timer_elapsed32(pir_window_start) > KEEPER_TIMEOUT) {
+            if (motion_detected_in_window) {
+                uprintf("PIR: Sending tickle (motion was detected)\n");
+                tap_code(KC_LSFT);
+            } else {
+                uprintf("PIR: No motion in window, skipping tickle\n");
+            }
+            // Reset window
+            pir_window_start = timer_read32();
+            motion_detected_in_window = false;
         }
     }
 }
@@ -299,8 +347,9 @@ void keyboard_post_init_user(void) {
     eeconfig_update_handedness(false); // Force write RIGHT
 #endif
 
-    // Configure PIR sensor pin as input
-    setPinInputLow(PIR_PIN);
+    // Configure PIR sensor pin as input (no pull resistor - PIR has its own pull)
+    setPinInput(PIR_PIN);
+    uprintf("PIR sensor initialized on GP29\n");
 
     // Initialize RGB to off (will turn on when keeper is enabled)
     rgblight_disable();
