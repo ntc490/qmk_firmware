@@ -21,7 +21,6 @@ enum keeper_modes {
 // Custom keycodes
 enum custom_keycodes {
     KEEPER_TGL = SAFE_RANGE,  // Cycle keeper modes: Off → Manual → PIR-gated → Off
-    CTRL_LCBR,                // Ctrl on hold, { on tap (custom implementation)
 };
 
 // Layer access keys
@@ -51,8 +50,9 @@ enum custom_keycodes {
 #define ALT_6   LALT_T(KC_6)
 #define GUI_QUOT LGUI_T(KC_QUOT)
 
-// Note: CTRL_LCBR is a custom keycode defined in enum above
-// (can't use LCTL_T(KC_LCBR) because shifted keys don't work in mod-taps)
+// Ctrl on hold, { on tap. Mod-taps can't take shifted keycodes like KC_LCBR,
+// so this is LCTL_T(KC_LBRC) with the tap swapped to { in process_record_user().
+#define CTRL_LCBR LCTL_T(KC_LBRC)
 
 // PIR sensor configuration
 #define PIR_PIN GP29  // PIR sensor on GPIO29
@@ -62,9 +62,6 @@ static uint8_t keeper_mode = KEEPER_OFF;
 static uint32_t last_activity_time = 0;
 #define KEEPER_TIMEOUT 60000  // 60 seconds in milliseconds
 
-// CTRL_LCBR (Ctrl-tap with {) state
-static bool ctrl_lcbr_pressed = false;
-static uint16_t ctrl_lcbr_timer = 0;
 
 // Combos (experimental): press both keys together
 //   Q + W -> Tab
@@ -229,26 +226,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
     switch (keycode) {
         case CTRL_LCBR:
-            if (record->event.pressed) {
-                // Key pressed - start timer
-                ctrl_lcbr_pressed = true;
-                ctrl_lcbr_timer = timer_read();
-            } else {
-                // Key released
-                if (ctrl_lcbr_pressed) {
-                    if (timer_elapsed(ctrl_lcbr_timer) < TAPPING_TERM) {
-                        // Tapped - send { (Shift+[)
-                        register_code(KC_LSFT);
-                        tap_code(KC_LBRC);
-                        unregister_code(KC_LSFT);
-                    } else {
-                        // Held - unregister ctrl
-                        unregister_code(KC_LCTL);
-                    }
-                    ctrl_lcbr_pressed = false;
-                }
+            if (record->tap.count && record->event.pressed) {
+                tap_code16(KC_LCBR);  // Tap: send { instead of [
+                return false;
             }
-            return false;  // Don't process this key further
+            return true;  // Hold: normal Ctrl handling
 
         case KEEPER_TGL:
             if (record->event.pressed) {
@@ -283,15 +265,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 }
 
 // Keeper: Check timer and send shift if idle too long
-// Also check for CTRL_LCBR hold detection and PIR sensor
+// Also check the PIR sensor
 void matrix_scan_user(void) {
-    // CTRL_LCBR hold detection
-    if (ctrl_lcbr_pressed && timer_elapsed(ctrl_lcbr_timer) >= TAPPING_TERM) {
-        // Held long enough - register ctrl
-        register_code(KC_LCTL);
-        ctrl_lcbr_pressed = false;  // Prevent re-triggering
-    }
-
     if (keeper_mode == KEEPER_MANUAL) {
         if (timer_elapsed32(last_activity_time) > KEEPER_TIMEOUT) {
             tap_code(KC_LSFT);

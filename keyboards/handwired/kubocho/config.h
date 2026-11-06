@@ -23,10 +23,14 @@
 #define SERIAL_USART_RX_PIN GP1     // Receive on GP1
 
 /*
- * Tapping configuration for home row mods
- * These settings handle bilateral combinations (two home row mods pressed quickly)
+ * Tapping configuration for home row mods (see docs/tap_hold.md)
  */
-#define TAPPING_TERM 200                    // Tapping term (ms) - matches KMK tap_time
+#define TAPPING_TERM 220     // Hold this long and it's always a mod
+#define PERMISSIVE_HOLD      // Mod + another key pressed AND released inside the term -> mod
+#define CHORDAL_HOLD         // ...but only if that other key is on the opposite hand
+#define FLOW_TAP_TERM 150    // Mod-tap pressed <150ms after a letter is always a tap (fast typing)
+// #define QUICK_TAP_TERM 120   // Tap-then-hold within 120ms auto-repeats the letter; slower -> mod
+// #define SPECULATIVE_HOLD     // Send Shift/Ctrl immediately on keydown (snappier Shift+click)
 
 /*
  * RGB LED configuration (Neopixel on GP23)
