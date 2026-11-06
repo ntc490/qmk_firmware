@@ -79,7 +79,6 @@ combo_t key_combos[] = {
     COMBO(combo_nm, KC_SPC),
     COMBO(combo_vb, KC_SPC),
 };
-uint16_t COMBO_LEN = sizeof(key_combos) / sizeof(key_combos[0]);
 
 // Override breathing intervals - lower = faster, higher = slower
 // Values are in ~65ms ticks. 10 = ~650ms per animation step.
@@ -305,7 +304,7 @@ void matrix_scan_user(void) {
         // Debug: print PIR pin state every 5 seconds
         static uint32_t last_debug_time = 0;
         if (timer_elapsed32(last_debug_time) > 5000) {
-            bool pin_state = readPin(PIR_PIN);
+            bool pin_state = gpio_read_pin(PIR_PIN);
             uprintf("PIR pin state: %d\n", pin_state);
             last_debug_time = timer_read32();
         }
@@ -317,7 +316,7 @@ void matrix_scan_user(void) {
         }
 
         // Check for motion during this window
-        if (readPin(PIR_PIN)) {
+        if (gpio_read_pin(PIR_PIN)) {
             if (!motion_detected_in_window) {
                 uprintf("PIR: Motion detected in window!\n");
                 motion_detected_in_window = true;
@@ -348,7 +347,7 @@ void keyboard_post_init_user(void) {
 #endif
 
     // Configure PIR sensor pin as input (no pull resistor - PIR has its own pull)
-    setPinInput(PIR_PIN);
+    gpio_set_pin_input(PIR_PIN);
     uprintf("PIR sensor initialized on GP29\n");
 
     // Initialize RGB to off (will turn on when keeper is enabled)

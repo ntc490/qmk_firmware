@@ -27,15 +27,14 @@
  * These settings handle bilateral combinations (two home row mods pressed quickly)
  */
 #define TAPPING_TERM 200                    // Tapping term (ms) - matches KMK tap_time
-#define IGNORE_MOD_TAP_INTERRUPT            // Prevent MT+MT from activating mods prematurely
 
 /*
  * RGB LED configuration (Neopixel on GP23)
  * One LED on RIGHT side only for keeper status indication
  */
 #define WS2812_PIO_USE_PIO1     // Use PIO1 (PIO0 is used for serial)
-#define RGB_DI_PIN GP23         // Data pin for neopixel
-#define RGBLED_NUM 1            // One LED on master (right) side only
+#define WS2812_DI_PIN GP23      // Data pin for neopixel
+#define RGBLIGHT_LED_COUNT 1    // One LED on master (right) side only
 // Note: RGBLED_SPLIT and RGBLIGHT_SPLIT are NOT defined - LED only on master
 
 // Enable breathing effect for keeper indicator
