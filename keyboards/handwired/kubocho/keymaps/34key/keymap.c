@@ -33,7 +33,7 @@ enum custom_keycodes {
 #define NUM_G   LT(_NUMS, KC_G)     // G tap, NUMS hold (use with right-hand numpad)
 #define NUM_H   LT(_NUMS, KC_H)     // H tap, NUMS hold (use with left-hand symbols)
 #define FKEY_T  LT(_FKEYS, KC_T)    // T tap, FKEYS hold (F-keys are on the right hand)
-#define ESC_PWR LT(_POWER, KC_ESC)  // Esc tap, POWER hold (left thumb)
+#define TAB_PWR LT(_POWER, KC_TAB)  // Tab tap, POWER hold (left thumb) - same as default keymap
 
 #define NEXTWIN LGUI(KC_GRV)        // Next window (Cmd+Grave)
 
@@ -97,7 +97,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      *       +-----+-----+-----+-----+-----+     +-----+-----+-----+-----+-----+
      *       |  Z  |  X  |  C  |  V  |  B  |     |  N  |  M  |  ,  |  .  |  /  |
      *       +-----+-----+-----+-----+-----+     +-----+-----+-----+-----+-----+
-     *                   |BKSP |ESC^P|                 | ENT | SPC |
+     *                   |BKSP |TAB^P|                 | ENT | SPC |
      *                   +-----+-----+                 +-----+-----+
      *
      * ^G=GUI ^A=ALT ^S=SHIFT ^C=CTRL ^N=NUMS ^F=FKEYS ^P=POWER (on hold)
@@ -107,7 +107,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         XXXXXXX, KC_Q,    KC_W,    KC_E,    KC_R,    FKEY_T,      KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    XXXXXXX,
         XXXXXXX, GUI_A,   ALT_S,   SHFT_D,  CTRL_F,  NUM_G,       NUM_H,   CTRL_J,  SHFT_K,  ALT_L,   GUI_SEMI,XXXXXXX,
         XXXXXXX, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,        KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, XXXXXXX,
-                                   KC_BSPC, ESC_PWR, XXXXXXX,     XXXXXXX, KC_ENT,  KC_SPC
+                                   KC_BSPC, TAB_PWR, XXXXXXX,     XXXXXXX, KC_ENT,  KC_SPC
     ),
 
     /*
@@ -149,7 +149,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
     /*
-     * Power-user Layer (hold left thumb Esc)
+     * Power-user Layer (hold left thumb Tab)
      *       +-----+-----+-----+-----+-----+     +-----+-----+-----+-----+-----+
      *       |     |     |     |     |     |     |PGDN |PGUP |     |     |BOOT |
      *       +-----+-----+-----+-----+-----+     +-----+-----+-----+-----+-----+
