@@ -43,13 +43,13 @@ enum custom_keycodes {
 
 // Home row mods - Right hand (mirrored: CTRL, SHIFT, ALT, GUI)
 #define CTRL_J  LCTL_T(KC_J)
-#define SHFT_K  LSFT_T(KC_K)
+#define SHFT_K  RSFT_T(KC_K)   // Right Shift so D+K = both shifts -> Caps Word
 #define ALT_L   LALT_T(KC_L)
 #define GUI_SEMI LGUI_T(KC_SCLN)
 
 // Home row mods for numbers layer - Right hand
 #define CTRL_4  LCTL_T(KC_4)
-#define SHFT_5  LSFT_T(KC_5)
+#define SHFT_5  RSFT_T(KC_5)
 #define ALT_6   LALT_T(KC_6)
 #define GUI_QUOT LGUI_T(KC_QUOT)
 
@@ -153,18 +153,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * +-----+-----+-----+-----+-----+-----+     +-----+-----+-----+-----+-----+-----+
      * |     |     |AUTOC|KEEPR|     |     |     |PGDN |PGUP |     |     |     | BOOT|
      * +-----+-----+-----+-----+-----+-----+     +-----+-----+-----+-----+-----+-----+
-     * | CAPS|     |     |     |     |     |     |LEFT |DOWN | UP  |RIGHT|     |     |
+     * | CAPS|CAPSW|     |     |     |     |     |LEFT |DOWN | UP  |RIGHT|     |     |
      * +-----+-----+-----+-----+-----+-----+     +-----+-----+-----+-----+-----+-----+
      * |     |     |     |     |     |     |     |NXTW |HOME | END |     |     |     |
      * +-----+-----+-----+-----+-----+-----+     +-----+-----+-----+-----+-----+-----+
      *                   |     |     |     |     |     |     |     |
      *                   +-----+-----+-----+     +-----+-----+-----+
      *
-     * Note: NXTW = Next Window (Cmd+Grave), HOME/END on M and comma, AUTOC = toggle autocorrect, BOOT = Enter bootloader mode
+     * Note: NXTW = Next Window (Cmd+Grave), HOME/END on M and comma, AUTOC = toggle autocorrect,
+     *       CAPSW = Caps Word (also: hold D+K together), BOOT = Enter bootloader mode
      */
     [_POWER] = LAYOUT_split_3x6_3(
         _______, _______, AC_TOGG, KEEPER_TOGG, _______, _______, KC_PGDN, KC_PGUP, _______, _______, _______, QK_BOOT,
-        KC_CAPS, _______, _______, _______, _______, _______,     KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, _______, _______,
+        KC_CAPS, CW_TOGG, _______, _______, _______, _______,     KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, _______, _______,
         _______, _______, _______, _______, _______, _______,     NEXTWIN, KC_HOME, KC_END,  _______, _______, _______,
                                    _______, _______, _______,     _______, _______, _______
     )

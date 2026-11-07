@@ -33,6 +33,12 @@
 // #define SPECULATIVE_HOLD     // Send Shift/Ctrl immediately on keydown (snappier Shift+click)
 
 /*
+ * Caps Word: hold both Shift home row mods (D + K) to capitalize until the end
+ * of the word. Needs exactly Left Shift + Right Shift, so K is RSFT_T.
+ */
+#define BOTH_SHIFTS_TURNS_ON_CAPS_WORD
+
+/*
  * RGB LED configuration (Neopixel on GP23)
  * One LED on RIGHT side only for keeper status indication
  */
