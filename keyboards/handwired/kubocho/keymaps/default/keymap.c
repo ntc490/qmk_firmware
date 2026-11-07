@@ -125,10 +125,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      *
      * Note: Home row mods poke through where _____ is used
      * LOCK = Layer Lock: keep this layer on after releasing the layer key (tap again to unlock)
-     * KEEPR = Cycle keep-awake modes: Off → Manual (blue) → PIR-gated (red) → Off
-     *   Mode 0 (Off): LED off, no tickler
-     *   Mode 1 (Manual): LED blue breathing, tickle when idle 60s
-     *   Mode 2 (PIR): LED red breathing, tickle only when motion detected
      */
     [_NUMS] = LAYOUT_split_3x6_3(
         _______, KC_GRV,  _______, _______, KC_LPRN, KC_RPRN,     KC_EQL,  KC_7,    KC_8,    KC_9,    KC_BSLS, _______,
@@ -171,6 +167,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * Note: NXTW = Next Window (Cmd+Grave), HOME/END on M and comma, AUTOC = toggle autocorrect,
      *       CAPSW = Caps Word (also: hold D+K together), LOCK = Layer Lock,
      *       BOOT = Enter bootloader mode
+     * KEEPR = Cycle keep-awake modes: Off → Manual (blue) → PIR-gated (red) → Off
+     *   Mode 0 (Off): LED off, no tickler
+     *   Mode 1 (Manual): LED blue breathing, tickle when idle 60s
+     *   Mode 2 (PIR): LED red breathing, tickle only when motion detected
      */
     [_POWER] = LAYOUT_split_3x6_3(
         _______, _______, AC_TOGG, KEEPER_TOGG, _______, _______, KC_PGDN, KC_PGUP, _______, _______, _______, QK_BOOT,

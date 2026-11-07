@@ -167,6 +167,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      *       +-----+-----+-----+-----+-----+     +-----+-----+-----+-----+-----+
      *
      * CAPSW = Caps Word (also: hold D+K together), LOCK = Layer Lock
+     * KEEPR = Cycle keep-awake modes: Off → Manual (blue) → PIR-gated (red) → Off
+     *   Mode 0 (Off): LED off, no tickler
+     *   Mode 1 (Manual): LED blue breathing, tickle when idle 60s
+     *   Mode 2 (PIR): LED red breathing, tickle only when motion detected
      */
     [_POWER] = LAYOUT_split_3x6_3(
         XXXXXXX, _______, AC_TOGG, KEEPER_TOGG, _______, _______, KC_PGDN, KC_PGUP, _______, _______, QK_BOOT, XXXXXXX,
