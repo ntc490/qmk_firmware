@@ -82,6 +82,13 @@ combo_t key_combos[] = {
     COMBO(combo_nm, KC_ESC),
 };
 
+// Key overrides: Shift + Backspace -> Delete
+const key_override_t delete_key_override = ko_make_basic(MOD_MASK_SHIFT, KC_BSPC, KC_DEL);
+
+const key_override_t *key_overrides[] = {
+    &delete_key_override,
+};
+
 // Override breathing intervals - lower = faster, higher = slower
 // Values are in ~65ms ticks. 10 = ~650ms per animation step.
 const uint8_t RGBLED_BREATHING_INTERVALS[] PROGMEM = {10, 10, 10, 10};
