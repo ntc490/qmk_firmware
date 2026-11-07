@@ -67,15 +67,12 @@ static uint32_t last_activity_time = 0;
 
 
 // Combos (experimental): press both keys together
-//   Q + W -> Tab
 //   N + M -> Space
 //   V + B -> Space
-const uint16_t PROGMEM combo_qw[] = {KC_Q, KC_W, COMBO_END};
 const uint16_t PROGMEM combo_nm[] = {KC_N, KC_M, COMBO_END};
 const uint16_t PROGMEM combo_vb[] = {KC_V, KC_B, COMBO_END};
 
 combo_t key_combos[] = {
-    COMBO(combo_qw, KC_TAB),
     COMBO(combo_nm, KC_SPC),
     COMBO(combo_vb, KC_SPC),
 };
