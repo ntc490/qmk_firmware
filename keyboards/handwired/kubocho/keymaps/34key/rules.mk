@@ -9,3 +9,6 @@ CAPS_WORD_ENABLE = yes
 
 # Key overrides (Shift+Backspace = Delete)
 KEY_OVERRIDE_ENABLE = yes
+
+# Layer Lock (QK_LLCK on the numbers and Power layers)
+LAYER_LOCK_ENABLE = yes

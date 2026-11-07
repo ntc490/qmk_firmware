@@ -118,12 +118,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * +-----+-----+-----+-----+-----+-----+     +-----+-----+-----+-----+-----+-----+
      * |     |     |     |     | {^C |  }  |     |  -  | 4^C | 5^S | 6^A | '^G |     |
      * +-----+-----+-----+-----+-----+-----+     +-----+-----+-----+-----+-----+-----+
-     * |     |     |     | ESC |  [  |  ]  |     |  .  |  1  |  2  |  3  |     |     |
+     * |     |     |     | ESC |  [  |  ]  |     |  .  |  1  |  2  |  3  |LOCK |     |
      * +-----+-----+-----+-----+-----+-----+     +-----+-----+-----+-----+-----+-----+
      *                   |     |     |     |     |     |     |  0  |
      *                   +-----+-----+-----+     +-----+-----+-----+
      *
      * Note: Home row mods poke through where _____ is used
+     * LOCK = Layer Lock: keep this layer on after releasing the layer key (tap again to unlock)
      * KEEPR = Cycle keep-awake modes: Off → Manual (blue) → PIR-gated (red) → Off
      *   Mode 0 (Off): LED off, no tickler
      *   Mode 1 (Manual): LED blue breathing, tickle when idle 60s
@@ -132,7 +133,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_NUMS] = LAYOUT_split_3x6_3(
         _______, KC_GRV,  _______, _______, KC_LPRN, KC_RPRN,     KC_EQL,  KC_7,    KC_8,    KC_9,    KC_LBRC, KC_RBRC,
         _______, _______, _______, _______, CTRL_LCBR, KC_RCBR,   KC_MINS, CTRL_4,  SHFT_5,  ALT_6,   GUI_QUOT,_______,
-        _______, _______, _______, KC_ESC,  KC_LBRC, KC_RBRC,     KC_DOT,  KC_1,    KC_2,    KC_3,    _______, _______,
+        _______, _______, _______, KC_ESC,  KC_LBRC, KC_RBRC,     KC_DOT,  KC_1,    KC_2,    KC_3,    QK_LLCK, _______,
                                    _______, _______, _______,     _______, _______, KC_0
     ),
 
@@ -162,18 +163,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * +-----+-----+-----+-----+-----+-----+     +-----+-----+-----+-----+-----+-----+
      * | CAPS|CAPSW|     |     |     |     |     |LEFT |DOWN | UP  |RIGHT|     |     |
      * +-----+-----+-----+-----+-----+-----+     +-----+-----+-----+-----+-----+-----+
-     * |     |     |     |     |     |     |     |NXTW |HOME | END |     |     |     |
+     * |     |     |     |     |     |     |     |NXTW |HOME | END |     |LOCK |     |
      * +-----+-----+-----+-----+-----+-----+     +-----+-----+-----+-----+-----+-----+
      *                   |     |     |     |     |     |     |     |
      *                   +-----+-----+-----+     +-----+-----+-----+
      *
      * Note: NXTW = Next Window (Cmd+Grave), HOME/END on M and comma, AUTOC = toggle autocorrect,
-     *       CAPSW = Caps Word (also: hold D+K together), BOOT = Enter bootloader mode
+     *       CAPSW = Caps Word (also: hold D+K together), LOCK = Layer Lock,
+     *       BOOT = Enter bootloader mode
      */
     [_POWER] = LAYOUT_split_3x6_3(
         _______, _______, AC_TOGG, KEEPER_TOGG, _______, _______, KC_PGDN, KC_PGUP, _______, _______, _______, QK_BOOT,
         KC_CAPS, CW_TOGG, _______, _______, _______, _______,     KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, _______, _______,
-        _______, _______, _______, _______, _______, _______,     NEXTWIN, KC_HOME, KC_END,  _______, _______, _______,
+        _______, _______, _______, _______, _______, _______,     NEXTWIN, KC_HOME, KC_END,  _______, QK_LLCK, _______,
                                    _______, _______, _______,     _______, _______, _______
     )
 };

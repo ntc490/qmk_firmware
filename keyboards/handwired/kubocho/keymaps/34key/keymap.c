@@ -124,17 +124,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      *       +-----+-----+-----+-----+-----+     +-----+-----+-----+-----+-----+
      *       |     |     |     | {^C |  }  |     |  -  | 4^C | 5^S | 6^A | '^G |
      *       +-----+-----+-----+-----+-----+     +-----+-----+-----+-----+-----+
-     *       |     |     | ESC |  [  |  ]  |     |  .  |  1  |  2  |  3  |     |
+     *       |     |     | ESC |  [  |  ]  |     |  .  |  1  |  2  |  3  |LOCK |
      *       +-----+-----+-----+-----+-----+     +-----+-----+-----+-----+-----+
      *                   |     |     |                 |     |  0  |
      *                   +-----+-----+                 +-----+-----+
      *
      * Blank left home row = home row mods poke through from the base layer.
+     * LOCK = Layer Lock: keep this layer on after releasing G (tap again to unlock)
      */
     [_NUMS] = LAYOUT_split_3x6_3(
         XXXXXXX, KC_GRV,  _______, _______, KC_LPRN, KC_RPRN,     KC_EQL,  KC_7,    KC_8,    KC_9,    KC_BSLS, XXXXXXX,
         XXXXXXX, _______, _______, _______, CTRL_LCBR, KC_RCBR,   KC_MINS, CTRL_4,  SHFT_5,  ALT_6,   GUI_QUOT,XXXXXXX,
-        XXXXXXX, _______, _______, KC_ESC,  KC_LBRC, KC_RBRC,     KC_DOT,  KC_1,    KC_2,    KC_3,    _______, XXXXXXX,
+        XXXXXXX, _______, _______, KC_ESC,  KC_LBRC, KC_RBRC,     KC_DOT,  KC_1,    KC_2,    KC_3,    QK_LLCK, XXXXXXX,
                                    _______, _______, XXXXXXX,     XXXXXXX, _______, KC_0
     ),
 
@@ -162,15 +163,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      *       +-----+-----+-----+-----+-----+     +-----+-----+-----+-----+-----+
      *       | CAPS|CAPSW|     |     |     |     |LEFT |DOWN | UP  |RIGHT|     |
      *       +-----+-----+-----+-----+-----+     +-----+-----+-----+-----+-----+
-     *       |     |     |     |     |     |     |NXTW |HOME | END |     |     |
+     *       |     |     |     |     |     |     |NXTW |HOME | END |     |LOCK |
      *       +-----+-----+-----+-----+-----+     +-----+-----+-----+-----+-----+
      *
-     * CAPSW = Caps Word (also: hold D+K together)
+     * CAPSW = Caps Word (also: hold D+K together), LOCK = Layer Lock
      */
     [_POWER] = LAYOUT_split_3x6_3(
         XXXXXXX, _______, AC_TOGG, KEEPER_TOGG, _______, _______, KC_PGDN, KC_PGUP, _______, _______, QK_BOOT, XXXXXXX,
         XXXXXXX, KC_CAPS, CW_TOGG, _______, _______, _______,     KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, _______, XXXXXXX,
-        XXXXXXX, _______, _______, _______, _______, _______,     NEXTWIN, KC_HOME, KC_END,  _______, _______, XXXXXXX,
+        XXXXXXX, _______, _______, _______, _______, _______,     NEXTWIN, KC_HOME, KC_END,  _______, QK_LLCK, XXXXXXX,
                                    _______, _______, XXXXXXX,     XXXXXXX, _______, _______
     )
 };

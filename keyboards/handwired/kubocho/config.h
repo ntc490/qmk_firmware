@@ -38,6 +38,9 @@
  */
 #define BOTH_SHIFTS_TURNS_ON_CAPS_WORD
 
+/* Layer Lock: a locked layer turns itself off after 60s with no key presses */
+#define LAYER_LOCK_IDLE_TIMEOUT 60000
+
 /*
  * RGB LED configuration (Neopixel on GP23)
  * One LED on RIGHT side only for keeper status indication
