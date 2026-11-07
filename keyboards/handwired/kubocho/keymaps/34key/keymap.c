@@ -56,17 +56,11 @@ enum custom_keycodes {
 #define CTRL_LCBR LCTL_T(KC_LBRC)
 
 // Combos: press both keys together
-//   C + V -> Tab (experimental)
-//   V + B -> Esc
-//   N + M -> Esc
+//   C + V -> Backspace (same on the default keymap and the laptop's kanata config)
 const uint16_t PROGMEM combo_cv[] = {KC_C, KC_V, COMBO_END};
-const uint16_t PROGMEM combo_vb[] = {KC_V, KC_B, COMBO_END};
-const uint16_t PROGMEM combo_nm[] = {KC_N, KC_M, COMBO_END};
 
 combo_t key_combos[] = {
-    COMBO(combo_cv, KC_TAB),
-    COMBO(combo_vb, KC_ESC),
-    COMBO(combo_nm, KC_ESC),
+    COMBO(combo_cv, KC_BSPC),
 };
 
 // Key overrides: Shift + Backspace -> Delete
@@ -91,7 +85,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      *                   +-----+-----+                 +-----+-----+
      *
      * ^G=GUI ^A=ALT ^S=SHIFT ^C=CTRL ^N=NUMS ^F=FKEYS ^P=POWER (on hold)
-     * Combos: C+V=Tab, V+B=Esc, N+M=Esc
+     * Combos: C+V=Backspace (Esc is on the numbers layer's C key)
      */
     [_BASE] = LAYOUT_split_3x6_3(
         XXXXXXX, KC_Q,    KC_W,    KC_E,    KC_R,    FKEY_T,      KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    XXXXXXX,

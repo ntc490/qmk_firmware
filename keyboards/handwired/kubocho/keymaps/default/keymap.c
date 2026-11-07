@@ -53,15 +53,12 @@ enum custom_keycodes {
 // so this is LCTL_T(KC_LBRC) with the tap swapped to { in process_record_user().
 #define CTRL_LCBR LCTL_T(KC_LBRC)
 
-// Combos (experimental): press both keys together
-//   N + M -> Space
-//   V + B -> Space
-const uint16_t PROGMEM combo_nm[] = {KC_N, KC_M, COMBO_END};
-const uint16_t PROGMEM combo_vb[] = {KC_V, KC_B, COMBO_END};
+// Combos: press both keys together
+//   C + V -> Backspace (same on the 34key keymap and the laptop's kanata config)
+const uint16_t PROGMEM combo_cv[] = {KC_C, KC_V, COMBO_END};
 
 combo_t key_combos[] = {
-    COMBO(combo_nm, KC_SPC),
-    COMBO(combo_vb, KC_SPC),
+    COMBO(combo_cv, KC_BSPC),
 };
 
 // Key overrides: Shift + Backspace -> Delete
@@ -86,6 +83,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      *
      * Note: ^G=GUI, ^A=ALT, ^S=SHIFT, ^C=CTRL, ^P=POWER, ^N=NUMS, ^F=FKEYS layer when held
      * REP = Repeat Key: repeats the last key pressed (with its mods)
+     * Combos: C+V=Backspace
      */
     [_BASE] = LAYOUT_split_3x6_3(
         KC_ESC,  KC_Q,    KC_W,    KC_E,    KC_R,    FKEY_T,      KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSLS,
