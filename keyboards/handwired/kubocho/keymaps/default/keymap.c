@@ -180,6 +180,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     )
 };
 
+// Chordal Hold handedness. '*' keys are exempt from the opposite-hands rule:
+//   - Thumbs, so a home row mod + a same-side thumb key still counts as a hold
+//     (e.g. Shift(D) + Backspace = Delete, Ctrl(F) + Backspace).
+//   - TAB_PWR, so Tab + a left-hand Power layer key (CAPS, CW, AUTOC, KEEPR)
+//     works without holding Tab past the tapping term.
+const char chordal_hold_layout[MATRIX_ROWS][MATRIX_COLS] PROGMEM = LAYOUT_split_3x6_3(
+    'L', 'L', 'L', 'L', 'L', 'L',    'R', 'R', 'R', 'R', 'R', 'R',
+    '*', 'L', 'L', 'L', 'L', 'L',    'R', 'R', 'R', 'R', 'R', 'R',
+    'L', 'L', 'L', 'L', 'L', 'L',    'R', 'R', 'R', 'R', 'R', 'R',
+                   '*', '*', '*',    '*', '*', '*'
+);
+
 // Per-key tap/hold configuration - DISABLED for now to use QMK defaults
 // Uncomment and re-enable TAPPING_TERM_PER_KEY in config.h if needed
 /*
