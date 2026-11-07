@@ -114,7 +114,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /*
      * Numbers Layer
      * +-----+-----+-----+-----+-----+-----+     +-----+-----+-----+-----+-----+-----+
-     * |     |  `  |     |     |  (  |  )  |     |  =  |  7  |  8  |  9  |  [  |  ]  |
+     * |     |  `  |     |     |  (  |  )  |     |  =  |  7  |  8  |  9  |  \  |     |
      * +-----+-----+-----+-----+-----+-----+     +-----+-----+-----+-----+-----+-----+
      * |     |     |     |     | {^C |  }  |     |  -  | 4^C | 5^S | 6^A | '^G |     |
      * +-----+-----+-----+-----+-----+-----+     +-----+-----+-----+-----+-----+-----+
@@ -131,7 +131,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      *   Mode 2 (PIR): LED red breathing, tickle only when motion detected
      */
     [_NUMS] = LAYOUT_split_3x6_3(
-        _______, KC_GRV,  _______, _______, KC_LPRN, KC_RPRN,     KC_EQL,  KC_7,    KC_8,    KC_9,    KC_LBRC, KC_RBRC,
+        _______, KC_GRV,  _______, _______, KC_LPRN, KC_RPRN,     KC_EQL,  KC_7,    KC_8,    KC_9,    KC_BSLS, _______,
         _______, _______, _______, _______, CTRL_LCBR, KC_RCBR,   KC_MINS, CTRL_4,  SHFT_5,  ALT_6,   GUI_QUOT,_______,
         _______, _______, _______, KC_ESC,  KC_LBRC, KC_RBRC,     KC_DOT,  KC_1,    KC_2,    KC_3,    QK_LLCK, _______,
                                    _______, _______, _______,     _______, _______, KC_0
