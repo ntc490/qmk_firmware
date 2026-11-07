@@ -5,7 +5,7 @@
 
 // Layer definitions
 enum layers {
-    _QWERTY,
+    _BASE,
     _NUMS,
     _FKEYS,
     _POWER
@@ -69,7 +69,7 @@ const key_override_t *key_overrides[] = {
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /*
-     * QWERTY Layer
+     * Base Layer (QWERTY)
      * +-----+-----+-----+-----+-----+-----+     +-----+-----+-----+-----+-----+-----+
      * | ESC |  Q  |  W  |  E  |  R  | T^F |     |  Y  |  U  |  I  |  O  |  P  |  \  |
      * +-----+-----+-----+-----+-----+-----+     +-----+-----+-----+-----+-----+-----+
@@ -83,7 +83,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * Note: ^G=GUI, ^A=ALT, ^S=SHIFT, ^C=CTRL, ^P=POWER, ^N=NUMS, ^F=FKEYS layer when held
      * REP = Repeat Key: repeats the last key pressed (with its mods)
      */
-    [_QWERTY] = LAYOUT_split_3x6_3(
+    [_BASE] = LAYOUT_split_3x6_3(
         KC_ESC,  KC_Q,    KC_W,    KC_E,    KC_R,    FKEY_T,      KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSLS,
         TAB_PWR, GUI_A,   ALT_S,   SHFT_D,  CTRL_F,  NUM_G,       NUM_H,   CTRL_J,  SHFT_K,  ALT_L,   GUI_SEMI,KC_QUOT,
         KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,        KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, FKEY_LYR,
