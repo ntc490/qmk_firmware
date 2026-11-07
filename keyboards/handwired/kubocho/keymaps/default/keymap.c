@@ -12,8 +12,12 @@ enum layers {
 };
 
 // Keeper (keep-awake) mode: KEEPER_TOGG keycode, PIR sensor, LED. See ../../keeper.h
-// Custom keycodes for this keymap would start at KEEPER_SAFE_RANGE.
 #include "keeper.h"
+
+// Custom keycodes (start after the keeper keycode)
+enum custom_keycodes {
+    SCRLBK = KEEPER_SAFE_RANGE,  // tmux/herdr scrollback: Ctrl+H (prefix), [ (copy mode), Ctrl+B (page up)
+};
 
 // Layer access keys
 #define NUM_LYR MO(_NUMS)
@@ -134,7 +138,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /*
      * Power-user Layer
      * +-----+-----+-----+-----+-----+-----+     +-----+-----+-----+-----+-----+-----+
-     * |     |     |AUTOC|KEEPR|     |     |     |PGDN |PGUP |     |     |     | BOOT|
+     * |     |     |AUTOC|KEEPR|     |     |     |PGDN |PGUP |SCRBK|     |     | BOOT|
      * +-----+-----+-----+-----+-----+-----+     +-----+-----+-----+-----+-----+-----+
      * | CAPS|CAPSW|     |     |     |     |     |LEFT |DOWN | UP  |RIGHT|     |     |
      * +-----+-----+-----+-----+-----+-----+     +-----+-----+-----+-----+-----+-----+
@@ -145,6 +149,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      *
      * Note: NXTW = Next Window (Cmd+Grave), HOME/END on M and comma, AUTOC = toggle autocorrect,
      *       CAPSW = Caps Word (also: hold D+K together), LOCK = Layer Lock,
+     *       SCRBK = tmux/herdr scrollback (Ctrl+H [ Ctrl+B),
      *       BOOT = Enter bootloader mode
      * KEEPR = Cycle keep-awake modes: Off → Manual (blue) → PIR-gated (red) → Off
      *   Mode 0 (Off): LED off, no tickler
@@ -152,7 +157,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      *   Mode 2 (PIR): LED red breathing, tickle only when motion detected
      */
     [_POWER] = LAYOUT_split_3x6_3(
-        _______, _______, AC_TOGG, KEEPER_TOGG, _______, _______, KC_PGDN, KC_PGUP, _______, _______, _______, QK_BOOT,
+        _______, _______, AC_TOGG, KEEPER_TOGG, _______, _______, KC_PGDN, KC_PGUP, SCRLBK,  _______, _______, QK_BOOT,
         KC_CAPS, CW_TOGG, _______, _______, _______, _______,     KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, _______, _______,
         _______, _______, _______, _______, _______, _______,     NEXTWIN, KC_HOME, KC_END,  _______, QK_LLCK, _______,
                                    _______, _______, _______,     _______, _______, _______
@@ -227,6 +232,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     }
 
     switch (keycode) {
+        case SCRLBK:
+            if (record->event.pressed) {
+                SEND_STRING(SS_LCTL("h") "[" SS_LCTL("b"));
+            }
+            return false;
+
         case CTRL_LCBR:
             if (record->tap.count && record->event.pressed) {
                 tap_code16(KC_LCBR);  // Tap: send { instead of [
