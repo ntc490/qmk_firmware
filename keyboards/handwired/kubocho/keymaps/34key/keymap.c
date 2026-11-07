@@ -5,7 +5,7 @@
 // The outer columns and outer thumb keys are KC_NO, so this can be tried on a
 // full Kubocho before moving to a real 34-key board.
 //
-// Keeper/PIR/handedness code is copied from keymaps/default - keep them in sync.
+// Keeper/PIR code is shared with keymaps/default via ../../keeper.c.
 
 #include QMK_KEYBOARD_H
 
@@ -17,17 +17,9 @@ enum layers {
     _POWER
 };
 
-// Keeper mode states
-enum keeper_modes {
-    KEEPER_OFF,
-    KEEPER_MANUAL,
-    KEEPER_PIR
-};
-
-// Custom keycodes
-enum custom_keycodes {
-    KEEPER_TOGG = SAFE_RANGE,  // Cycle keeper modes: Off -> Manual -> PIR-gated -> Off
-};
+// Keeper (keep-awake) mode: KEEPER_TOGG keycode, PIR sensor, LED. See ../../keeper.h
+// Custom keycodes for this keymap would start at KEEPER_SAFE_RANGE.
+#include "keeper.h"
 
 // Layer-taps
 #define NUM_G   LT(_NUMS, KC_G)     // G tap, NUMS hold (use with right-hand numpad)
@@ -59,15 +51,6 @@ enum custom_keycodes {
 // so this is LCTL_T(KC_LBRC) with the tap swapped to { in process_record_user().
 #define CTRL_LCBR LCTL_T(KC_LBRC)
 
-// PIR sensor configuration
-#define PIR_PIN GP29  // PIR sensor on GPIO29
-
-// Keeper (keep-awake) state
-static uint8_t keeper_mode = KEEPER_OFF;
-static uint32_t last_activity_time = 0;
-#define KEEPER_TIMEOUT 60000  // 60 seconds in milliseconds
-
-
 // Combos: press both keys together
 //   C + V -> Tab (experimental)
 //   V + B -> Esc
@@ -88,10 +71,6 @@ const key_override_t delete_key_override = ko_make_basic(MOD_MASK_SHIFT, KC_BSPC
 const key_override_t *key_overrides[] = {
     &delete_key_override,
 };
-
-// Override breathing intervals - lower = faster, higher = slower
-// Values are in ~65ms ticks. 10 = ~650ms per animation step.
-const uint8_t RGBLED_BREATHING_INTERVALS[] PROGMEM = {10, 10, 10, 10};
 
 // XXXXXXX = key not present on a 34-key board
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -189,10 +168,10 @@ const char chordal_hold_layout[MATRIX_ROWS][MATRIX_COLS] PROGMEM = LAYOUT_split_
                    '*', '*', '*',    '*', '*', '*'
 );
 
-// Process custom keycodes and track activity for keeper
+// Process custom keycodes (and let keeper track activity / handle KEEPER_TOGG)
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    if (record->event.pressed && keeper_mode == KEEPER_MANUAL) {
-        last_activity_time = timer_read32();
+    if (!keeper_process_record(keycode, record)) {
+        return false;
     }
 
     switch (keycode) {
@@ -202,86 +181,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 return false;
             }
             return true;  // Hold: normal Ctrl handling
-
-        case KEEPER_TOGG:
-            if (record->event.pressed) {
-                keeper_mode = (keeper_mode + 1) % 3;
-
-                switch (keeper_mode) {
-                    case KEEPER_OFF:
-                        uprintf("Keeper: OFF\n");
-                        rgblight_disable();
-                        break;
-
-                    case KEEPER_MANUAL:
-                        uprintf("Keeper: MANUAL\n");
-                        last_activity_time = timer_read32();
-                        rgblight_enable();
-                        rgblight_sethsv(170, 255, 128);  // Blue
-                        rgblight_mode(RGBLIGHT_MODE_BREATHING);
-                        break;
-
-                    case KEEPER_PIR:
-                        uprintf("Keeper: PIR mode - watching GP29\n");
-                        rgblight_enable();
-                        rgblight_sethsv(0, 255, 128);  // Red
-                        rgblight_mode(RGBLIGHT_MODE_BREATHING);
-                        break;
-                }
-            }
-            return false;  // Don't process this key further
     }
 
     return true;  // Process all other keycodes normally
 }
 
-// Keeper: Check timer and send shift if idle too long
-// Also check the PIR sensor
 void matrix_scan_user(void) {
-    if (keeper_mode == KEEPER_MANUAL) {
-        if (timer_elapsed32(last_activity_time) > KEEPER_TIMEOUT) {
-            tap_code(KC_LSFT);
-            last_activity_time = timer_read32();
-        }
-    } else if (keeper_mode == KEEPER_PIR) {
-        static uint32_t pir_window_start = 0;
-        static bool motion_detected_in_window = false;
-
-        // Debug: print PIR pin state every 5 seconds
-        static uint32_t last_debug_time = 0;
-        if (timer_elapsed32(last_debug_time) > 5000) {
-            bool pin_state = gpio_read_pin(PIR_PIN);
-            uprintf("PIR pin state: %d\n", pin_state);
-            last_debug_time = timer_read32();
-        }
-
-        // Initialize window timer if not started
-        if (pir_window_start == 0) {
-            pir_window_start = timer_read32();
-            motion_detected_in_window = false;
-        }
-
-        // Check for motion during this window
-        if (gpio_read_pin(PIR_PIN)) {
-            if (!motion_detected_in_window) {
-                uprintf("PIR: Motion detected in window!\n");
-                motion_detected_in_window = true;
-            }
-        }
-
-        // Check if window has elapsed
-        if (timer_elapsed32(pir_window_start) > KEEPER_TIMEOUT) {
-            if (motion_detected_in_window) {
-                uprintf("PIR: Sending tickle (motion was detected)\n");
-                tap_code(KC_LSFT);
-            } else {
-                uprintf("PIR: No motion in window, skipping tickle\n");
-            }
-            // Reset window
-            pir_window_start = timer_read32();
-            motion_detected_in_window = false;
-        }
-    }
+    keeper_task();
 }
 
 // Force handedness write on boot when using INIT_EE_HANDS_LEFT/RIGHT
@@ -292,10 +198,5 @@ void keyboard_post_init_user(void) {
     eeconfig_update_handedness(false); // Force write RIGHT
 #endif
 
-    // Configure PIR sensor pin as input (no pull resistor - PIR has its own pull)
-    gpio_set_pin_input(PIR_PIN);
-    uprintf("PIR sensor initialized on GP29\n");
-
-    // Initialize RGB to off (will turn on when keeper is enabled)
-    rgblight_disable();
+    keeper_init();
 }

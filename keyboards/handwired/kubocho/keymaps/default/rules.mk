@@ -15,3 +15,6 @@ KEY_OVERRIDE_ENABLE = yes
 
 # Layer Lock (QK_LLCK on the numbers and Power layers)
 LAYER_LOCK_ENABLE = yes
+
+# Keeper (keep-awake) mode, shared with the other keymaps
+SRC += keeper.c
