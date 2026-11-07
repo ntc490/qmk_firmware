@@ -91,16 +91,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * +-----+-----+-----+-----+-----+-----+     +-----+-----+-----+-----+-----+-----+
      * |LSHFT|  Z  |  X  |  C  |  V  |  B  |     |  N  |  M  |  ,  |  .  |  /  |FKEYS|
      * +-----+-----+-----+-----+-----+-----+     +-----+-----+-----+-----+-----+-----+
-     *                   |BKSP |LCTRL| NUMS|     | NUMS| ENT | SPC |
+     *                   |BKSP |LCTRL| NUMS|     | REP | ENT | SPC |
      *                   +-----+-----+-----+     +-----+-----+-----+
      *
      * Note: ^G=GUI, ^A=ALT, ^S=SHIFT, ^C=CTRL, ^P=POWER, ^N=NUMS, ^F=FKEYS layer when held
+     * REP = Repeat Key: repeats the last key pressed (with its mods)
      */
     [_QWERTY] = LAYOUT_split_3x6_3(
         KC_ESC,  KC_Q,    KC_W,    KC_E,    KC_R,    FKEY_T,      KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSLS,
         TAB_PWR, GUI_A,   ALT_S,   SHFT_D,  CTRL_F,  NUM_G,       NUM_H,   CTRL_J,  SHFT_K,  ALT_L,   GUI_SEMI,KC_QUOT,
         KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,        KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, FKEY_LYR,
-                                   KC_BSPC, KC_LCTL, NUM_LYR,     NUM_LYR, KC_ENT,  KC_SPC
+                                   KC_BSPC, KC_LCTL, NUM_LYR,     QK_REP,  KC_ENT,  KC_SPC
     ),
 
     /*
