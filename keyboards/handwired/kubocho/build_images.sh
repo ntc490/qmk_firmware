@@ -34,6 +34,12 @@ if [[ "$KEYMAP" == default ]]; then name=kubocho; suffix=""; else name="kubocho_
 dest="$ARCHIVE_ROOT/$(date +%Y%m%d-%H%M%S)-$sha$suffix"
 mkdir -p "$dest"
 
+# Regenerate autocorrect data from the shared dictionary for keymaps that use it
+dict="keyboards/$KB/autocorrect_dictionary.txt"
+if [[ -f "$dict" ]] && grep -qs '^AUTOCORRECT_ENABLE *= *yes' "keyboards/$KB/keymaps/$KEYMAP/rules.mk"; then
+    qmk generate-autocorrect-data -kb "$KB" -km "$KEYMAP" "$dict" -q
+fi
+
 # TARGET gives each variant its own output name and object dir, so builds
 # don't clobber each other. EXTRAFLAGS adds the same define the
 # uf2-split-{left,right} flash targets would, without their wait-for-mount step.

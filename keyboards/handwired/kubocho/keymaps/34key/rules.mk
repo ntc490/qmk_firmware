@@ -1,2 +1,5 @@
-# Combos (e.g. Q+W -> Tab)
+# Combos
 COMBO_ENABLE = yes
+
+# Autocorrect (dictionary: ../../autocorrect_dictionary.txt)
+AUTOCORRECT_ENABLE = yes

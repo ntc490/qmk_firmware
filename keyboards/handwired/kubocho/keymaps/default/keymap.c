@@ -150,7 +150,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /*
      * Power-user Layer
      * +-----+-----+-----+-----+-----+-----+     +-----+-----+-----+-----+-----+-----+
-     * |     |     |     |     |     |     |     |PGDN |PGUP |     |     |     | BOOT|
+     * |     |     |AUTOC|     |     |     |     |PGDN |PGUP |     |     |     | BOOT|
      * +-----+-----+-----+-----+-----+-----+     +-----+-----+-----+-----+-----+-----+
      * |     |     |     |     |     |     |     |LEFT |DOWN | UP  |RIGHT|     |     |
      * +-----+-----+-----+-----+-----+-----+     +-----+-----+-----+-----+-----+-----+
@@ -159,10 +159,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      *                   |     |     |     |     |     |     |     |
      *                   +-----+-----+-----+     +-----+-----+-----+
      *
-     * Note: NXTW = Next Window (Cmd+Grave), HOME/END on M and comma, BOOT = Enter bootloader mode
+     * Note: NXTW = Next Window (Cmd+Grave), HOME/END on M and comma, AUTOC = toggle autocorrect, BOOT = Enter bootloader mode
      */
     [_POWER] = LAYOUT_split_3x6_3(
-        _______, _______, _______, _______, _______, _______,     KC_PGDN, KC_PGUP, _______, _______, _______, QK_BOOT,
+        _______, _______, AC_TOGG, _______, _______, _______,     KC_PGDN, KC_PGUP, _______, _______, _______, QK_BOOT,
         _______, _______, _______, _______, _______, _______,     KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, _______, _______,
         _______, _______, _______, _______, _______, _______,     NEXTWIN, KC_HOME, KC_END,  _______, _______, _______,
                                    _______, _______, _______,     _______, _______, _______

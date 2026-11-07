@@ -1,0 +1,21 @@
+# Kubocho autocorrect dictionary (shared by all keymaps).
+#
+# Syntax: typo -> correction, one per line. Letters a-z only in the typo; ':' marks a word
+# break (start/end of word). Case-insensitive.
+#
+# After editing, regenerate each keymap's autocorrect_data.h:
+#   qmk generate-autocorrect-data -kb handwired/kubocho -km default keyboards/handwired/kubocho/autocorrect_dictionary.txt
+#   qmk generate-autocorrect-data -kb handwired/kubocho -km 34key   keyboards/handwired/kubocho/autocorrect_dictionary.txt
+# (build_images.sh does this automatically.)
+#
+# Tip: `pip install english_words` lets the generator warn when a typo is
+# also a substring of a real word.
+
+# Comments must be on their own line - text after the correction is typed out!
+
+# Whole word only (":teh" would also hit "Tehran")
+:teh:   -> the
+:hte:   -> the
+taht    -> that
+# -tion endings: "actino" -> "action". Will also hit "Latino", "Valentino".
+tino:   -> tion

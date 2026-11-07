@@ -151,7 +151,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /*
      * Power-user Layer (hold left thumb Tab)
      *       +-----+-----+-----+-----+-----+     +-----+-----+-----+-----+-----+
-     *       |     |     |     |     |     |     |PGDN |PGUP |     |     |BOOT |
+     *       |     |AUTOC|     |     |     |     |PGDN |PGUP |     |     |BOOT |
      *       +-----+-----+-----+-----+-----+     +-----+-----+-----+-----+-----+
      *       |     |     |     |     |     |     |LEFT |DOWN | UP  |RIGHT|     |
      *       +-----+-----+-----+-----+-----+     +-----+-----+-----+-----+-----+
@@ -159,7 +159,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      *       +-----+-----+-----+-----+-----+     +-----+-----+-----+-----+-----+
      */
     [_POWER] = LAYOUT_split_3x6_3(
-        XXXXXXX, _______, _______, _______, _______, _______,     KC_PGDN, KC_PGUP, _______, _______, QK_BOOT, XXXXXXX,
+        XXXXXXX, _______, AC_TOGG, _______, _______, _______,     KC_PGDN, KC_PGUP, _______, _______, QK_BOOT, XXXXXXX,
         XXXXXXX, _______, _______, _______, _______, _______,     KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, _______, XXXXXXX,
         XXXXXXX, _______, _______, _______, _______, _______,     NEXTWIN, KC_HOME, KC_END,  _______, _______, XXXXXXX,
                                    _______, _______, XXXXXXX,     XXXXXXX, _______, _______
