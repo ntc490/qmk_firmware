@@ -26,7 +26,7 @@ enum keeper_modes {
 
 // Custom keycodes
 enum custom_keycodes {
-    KEEPER_TGL = SAFE_RANGE,  // Cycle keeper modes: Off -> Manual -> PIR-gated -> Off
+    KEEPER_TOGG = SAFE_RANGE,  // Cycle keeper modes: Off -> Manual -> PIR-gated -> Off
 };
 
 // Layer-taps
@@ -113,11 +113,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /*
      * Numbers Layer (hold G for the right side, H for the left side)
      *       +-----+-----+-----+-----+-----+     +-----+-----+-----+-----+-----+
-     *       |  `  |     |KEEPR|  (  |  )  |     |  =  |  7  |  8  |  9  |  \  |
+     *       |  `  |     |     |  (  |  )  |     |  =  |  7  |  8  |  9  |  \  |
      *       +-----+-----+-----+-----+-----+     +-----+-----+-----+-----+-----+
      *       |     |     |     | {^C |  }  |     |  -  | 4^C | 5^S | 6^A | '^G |
      *       +-----+-----+-----+-----+-----+     +-----+-----+-----+-----+-----+
-     *       |CAPS |     | ESC |  [  |  ]  |     |  .  |  1  |  2  |  3  |     |
+     *       |     |     | ESC |  [  |  ]  |     |  .  |  1  |  2  |  3  |     |
      *       +-----+-----+-----+-----+-----+     +-----+-----+-----+-----+-----+
      *                   |     |     |                 |     |  0  |
      *                   +-----+-----+                 +-----+-----+
@@ -125,9 +125,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * Blank left home row = home row mods poke through from the base layer.
      */
     [_NUMS] = LAYOUT_split_3x6_3(
-        XXXXXXX, KC_GRV,  _______, KEEPER_TGL, KC_LPRN, KC_RPRN,  KC_EQL,  KC_7,    KC_8,    KC_9,    KC_BSLS, XXXXXXX,
+        XXXXXXX, KC_GRV,  _______, _______, KC_LPRN, KC_RPRN,     KC_EQL,  KC_7,    KC_8,    KC_9,    KC_BSLS, XXXXXXX,
         XXXXXXX, _______, _______, _______, CTRL_LCBR, KC_RCBR,   KC_MINS, CTRL_4,  SHFT_5,  ALT_6,   GUI_QUOT,XXXXXXX,
-        XXXXXXX, KC_CAPS, _______, KC_ESC,  KC_LBRC, KC_RBRC,     KC_DOT,  KC_1,    KC_2,    KC_3,    _______, XXXXXXX,
+        XXXXXXX, _______, _______, KC_ESC,  KC_LBRC, KC_RBRC,     KC_DOT,  KC_1,    KC_2,    KC_3,    _______, XXXXXXX,
                                    _______, _______, XXXXXXX,     XXXXXXX, _______, KC_0
     ),
 
@@ -151,16 +151,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /*
      * Power-user Layer (hold left thumb Tab)
      *       +-----+-----+-----+-----+-----+     +-----+-----+-----+-----+-----+
-     *       |     |AUTOC|     |     |     |     |PGDN |PGUP |     |     |BOOT |
+     *       |     |AUTOC|KEEPR|     |     |     |PGDN |PGUP |     |     |BOOT |
      *       +-----+-----+-----+-----+-----+     +-----+-----+-----+-----+-----+
-     *       |     |     |     |     |     |     |LEFT |DOWN | UP  |RIGHT|     |
+     *       | CAPS|     |     |     |     |     |LEFT |DOWN | UP  |RIGHT|     |
      *       +-----+-----+-----+-----+-----+     +-----+-----+-----+-----+-----+
      *       |     |     |     |     |     |     |NXTW |HOME | END |     |     |
      *       +-----+-----+-----+-----+-----+     +-----+-----+-----+-----+-----+
      */
     [_POWER] = LAYOUT_split_3x6_3(
-        XXXXXXX, _______, AC_TOGG, _______, _______, _______,     KC_PGDN, KC_PGUP, _______, _______, QK_BOOT, XXXXXXX,
-        XXXXXXX, _______, _______, _______, _______, _______,     KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, _______, XXXXXXX,
+        XXXXXXX, _______, AC_TOGG, KEEPER_TOGG, _______, _______, KC_PGDN, KC_PGUP, _______, _______, QK_BOOT, XXXXXXX,
+        XXXXXXX, KC_CAPS, _______, _______, _______, _______,     KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, _______, XXXXXXX,
         XXXXXXX, _______, _______, _______, _______, _______,     NEXTWIN, KC_HOME, KC_END,  _______, _______, XXXXXXX,
                                    _______, _______, XXXXXXX,     XXXXXXX, _______, _______
     )
@@ -189,7 +189,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             return true;  // Hold: normal Ctrl handling
 
-        case KEEPER_TGL:
+        case KEEPER_TOGG:
             if (record->event.pressed) {
                 keeper_mode = (keeper_mode + 1) % 3;
 
