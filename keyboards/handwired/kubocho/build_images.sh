@@ -7,15 +7,19 @@
 #   kubocho_generic.uf2      - default keymap, uses whatever handedness is in EEPROM
 #   kubocho_eeprom_clear.uf2 - EEPROM reset keymap
 #
-# Usage: keyboards/handwired/kubocho/build_images.sh [archive_dir]
+# Usage: [KEYMAP=34key] keyboards/handwired/kubocho/build_images.sh [archive_dir]
+#   KEYMAP      defaults to "default"; other keymaps get it in their file names
+#               (e.g. kubocho_34key_left.uf2)
 #   archive_dir defaults to ~/kubocho_firmware
-# Images land in <archive_dir>/<date>-<git-sha>/ and <archive_dir>/latest -> that dir.
+# Images land in <archive_dir>/<date>-<git-sha>[-<keymap>]/ and
+# <archive_dir>/latest[-<keymap>] -> that dir.
 
 set -euo pipefail
 
 KB=handwired/kubocho
 ROOT="$(git -C "$(dirname "$0")" rev-parse --show-toplevel)"
 ARCHIVE_ROOT="${1:-$HOME/kubocho_firmware}"
+KEYMAP="${KEYMAP:-default}"
 
 cd "$ROOT"
 if [[ -z "${VIRTUAL_ENV:-}" && -f venv/bin/activate ]]; then
@@ -25,7 +29,9 @@ fi
 
 sha="$(git rev-parse --short HEAD)"
 git diff --quiet HEAD -- "keyboards/$KB" || sha="${sha}-dirty"
-dest="$ARCHIVE_ROOT/$(date +%Y%m%d-%H%M%S)-$sha"
+if [[ "$KEYMAP" == default ]]; then name=kubocho; suffix=""; else name="kubocho_$KEYMAP"; suffix="-$KEYMAP"; fi
+[[ -d "keyboards/$KB/keymaps/$KEYMAP" ]] || { echo "No such keymap: $KEYMAP" >&2; exit 1; }
+dest="$ARCHIVE_ROOT/$(date +%Y%m%d-%H%M%S)-$sha$suffix"
 mkdir -p "$dest"
 
 # TARGET gives each variant its own output name and object dir, so builds
@@ -37,12 +43,12 @@ build() {  # build <keymap> <target-name> [extra-cflags]
     cp ".build/$2.uf2" "$dest/"
 }
 
-build default      kubocho_left         -DINIT_EE_HANDS_LEFT
-build default      kubocho_right        -DINIT_EE_HANDS_RIGHT
-build default      kubocho_generic
+build "$KEYMAP"    "${name}_left"       -DINIT_EE_HANDS_LEFT
+build "$KEYMAP"    "${name}_right"      -DINIT_EE_HANDS_RIGHT
+build "$KEYMAP"    "${name}_generic"
 build eeprom_clear kubocho_eeprom_clear
 
-ln -sfn "$dest" "$ARCHIVE_ROOT/latest"
+ln -sfn "$dest" "$ARCHIVE_ROOT/latest$suffix"
 echo
 echo "Images archived in $dest:"
 ls -l "$dest"
